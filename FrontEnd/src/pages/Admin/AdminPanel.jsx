@@ -1,124 +1,302 @@
-import React, { useState } from 'react';
-import { Card, CardContent } from '../../components/ui/Card';
+import React, { useState, useEffect, useContext } from 'react';
 import { Button } from '../../components/ui/Button';
+import { Card, CardContent } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
-import { JOBS } from '../../lib/data';
-import { Users, Briefcase, Trash2, Shield } from 'lucide-react';
+import { Users, Briefcase, BarChart, Settings, FileText, Trash2 } from 'lucide-react';
+import authService from '../../features/auth/authService';
+import jobService from '../../features/jobs/jobService';
+import applicationService from '../../features/application/applicationService';
+import AuthContext from '../../context/AuthContext';
 
 const AdminPanel = () => {
-    const [activeTab, setActiveTab] = useState('jobs');
+    const { user } = useContext(AuthContext);
+    const [activeTab, setActiveTab] = useState('overview');
+    const [users, setUsers] = useState([]);
+    const [allJobs, setAllJobs] = useState([]);
+    const [applications, setApplications] = useState([]);
 
-    // Mock Users Data
-    const users = [
-        { id: 1, name: "John Doe", email: "john@example.com", role: "Seeker", joined: "2 days ago" },
-        { id: 2, name: "Alice Smith", email: "alice@techflow.com", role: "Employer", joined: "1 week ago" },
-        { id: 3, name: "Bob Johnson", email: "bob@example.com", role: "Seeker", joined: "3 days ago" },
-    ];
+    useEffect(() => {
+        const fetchUsers = async () => {
+            if (user && user.role === 'admin') {
+                try {
+                    const data = await authService.getUsers(user.token);
+                    setUsers(data);
+                } catch (error) {
+                    console.error("Failed to fetch users", error);
+                }
+            }
+        };
+        fetchUsers();
+    }, [user]);
+
+    useEffect(() => {
+        const fetchAllJobs = async () => {
+            try {
+                const data = await jobService.getJobs();
+                setAllJobs(data);
+            } catch (error) {
+                console.error("Failed to fetch jobs", error);
+            }
+        };
+        fetchAllJobs();
+    }, []);
+
+    useEffect(() => {
+        const fetchApplications = async () => {
+            if (user && user.role === 'admin') {
+                try {
+                    const data = await applicationService.getAllApplications(user.token);
+                    setApplications(data);
+                } catch (error) {
+                    console.error("Failed to fetch applications", error);
+                }
+            }
+        };
+        fetchApplications();
+    }, [user]);
+
+    const handleDeleteUser = async (userId) => {
+        if (window.confirm('Are you sure you want to delete this user?')) {
+            try {
+                await authService.deleteUser(userId, user.token);
+                setUsers(users.filter(u => u._id !== userId));
+            } catch (error) {
+                alert('Failed to delete user');
+            }
+        }
+    };
+
+    const handleDeleteJob = async (jobId) => {
+        if (window.confirm('Are you sure you want to delete this job?')) {
+            try {
+                await jobService.deleteJob(jobId, user.token);
+                setAllJobs(allJobs.filter(j => j._id !== jobId));
+            } catch (error) {
+                alert('Failed to delete job');
+            }
+        }
+    };
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center gap-3 mb-8">
-                    <div className="p-2 bg-red-100 rounded-lg text-red-600">
-                        <Shield className="h-6 w-6" />
-                    </div>
-                    <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+        <div className="min-h-screen bg-gray-900 text-gray-100 flex">
+            {/* Sidebar */}
+            <aside className="w-64 bg-gray-800 border-r border-gray-700 hidden md:flex flex-col">
+                <div className="p-6">
+                    <h2 className="text-2xl font-bold text-red-500 tracking-wider">ADMIN<span className="text-white">PANEL</span></h2>
                 </div>
-
-                {/* Stats Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <Card>
-                        <CardContent className="p-6 flex items-center justify-between">
-                            <div>
-                                <p className="text-sm font-medium text-gray-500">Total Users</p>
-                                <p className="text-3xl font-bold text-gray-900">1,234</p>
-                            </div>
-                            <div className="h-12 w-12 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600">
-                                <Users className="h-6 w-6" />
-                            </div>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardContent className="p-6 flex items-center justify-between">
-                            <div>
-                                <p className="text-sm font-medium text-gray-500">Total Jobs</p>
-                                <p className="text-3xl font-bold text-gray-900">{JOBS.length}</p>
-                            </div>
-                            <div className="h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center text-accent">
-                                <Briefcase className="h-6 w-6" />
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
-
-                {/* Tabs */}
-                <div className="flex space-x-1 rounded-xl bg-gray-200 p-1 mb-6 w-fit">
+                <nav className="flex-1 p-4 space-y-2">
                     <button
-                        className={`w-32 rounded-lg py-2.5 text-sm font-medium leading-5 transition-all ${activeTab === 'jobs' ? 'bg-white shadow text-gray-900' : 'text-gray-600 hover:bg-white/[0.12] hover:text-gray-800'}`}
-                        onClick={() => setActiveTab('jobs')}
+                        onClick={() => setActiveTab('overview')}
+                        className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${activeTab === 'overview' ? 'bg-red-900/40 text-red-400 border-l-4 border-red-500' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}
                     >
-                        Manage Jobs
+                        <BarChart size={20} />
+                        <span className="font-medium">Overview</span>
                     </button>
                     <button
-                        className={`w-32 rounded-lg py-2.5 text-sm font-medium leading-5 transition-all ${activeTab === 'users' ? 'bg-white shadow text-gray-900' : 'text-gray-600 hover:bg-white/[0.12] hover:text-gray-800'}`}
                         onClick={() => setActiveTab('users')}
+                        className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${activeTab === 'users' ? 'bg-red-900/40 text-red-400 border-l-4 border-red-500' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}
                     >
-                        Manage Users
+                        <Users size={20} />
+                        <span className="font-medium">Users Management</span>
                     </button>
-                </div>
+                    <button
+                        onClick={() => setActiveTab('jobs')}
+                        className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${activeTab === 'jobs' ? 'bg-red-900/40 text-red-400 border-l-4 border-red-500' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}
+                    >
+                        <Briefcase size={20} />
+                        <span className="font-medium">Jobs</span>
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('applications')}
+                        className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${activeTab === 'applications' ? 'bg-red-900/40 text-red-400 border-l-4 border-red-500' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}
+                    >
+                        <FileText size={20} />
+                        <span className="font-medium">Applications</span>
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('settings')}
+                        className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${activeTab === 'settings' ? 'bg-red-900/40 text-red-400 border-l-4 border-red-500' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}
+                    >
+                        <Settings size={20} />
+                        <span className="font-medium">Settings</span>
+                    </button>
+                </nav>
+            </aside>
 
-                {/* Content */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    {activeTab === 'jobs' ? (
-                        <div className="divide-y divide-gray-200">
-                            <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">All Jobs</h3>
-                            </div>
-                            {JOBS.map((job) => (
-                                <div key={job.id} className="p-6 flex items-center justify-between hover:bg-gray-50">
-                                    <div>
-                                        <h4 className="font-semibold text-gray-900">{job.title}</h4>
-                                        <p className="text-sm text-gray-500">{job.company}</p>
-                                    </div>
-                                    <div className="flex items-center gap-4">
-                                        <Badge variant="secondary">{job.type}</Badge>
-                                        <Button size="sm" variant="ghost" className="text-red-600 hover:bg-red-50 hover:text-red-700">
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="divide-y divide-gray-200">
-                            <div className="px-6 py-4 bg-gray-50 border-b border-gray-200 grid grid-cols-4">
-                                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider col-span-2">User</h3>
-                                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Role</h3>
-                                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider text-right">Action</h3>
-                            </div>
-                            {users.map((user) => (
-                                <div key={user.id} className="p-6 grid grid-cols-4 items-center hover:bg-gray-50">
-                                    <div className="col-span-2">
-                                        <h4 className="font-semibold text-gray-900">{user.name}</h4>
-                                        <p className="text-sm text-gray-500">{user.email}</p>
+            {/* Main Content */}
+            <main className="flex-1 overflow-y-auto">
+                <header className="bg-gray-800 border-b border-gray-700 p-6 shadow-md">
+                    <h1 className="text-2xl font-semibold text-white">
+                        {activeTab === 'overview' && 'Dashboard Overview'}
+                        {activeTab === 'users' && 'User Management'}
+                        {activeTab === 'jobs' && 'Job Listings'}
+                        {activeTab === 'applications' && 'All Applications'}
+                    </h1>
+                </header>
+
+                <div className="p-8">
+                    {/* OVERVIEW TAB */}
+                    {activeTab === 'overview' && (
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            <Card className="bg-gray-800 border-gray-700">
+                                <CardContent className="p-6 flex items-center space-x-4">
+                                    <div className="p-3 rounded-full bg-blue-900/50 text-blue-400">
+                                        <Users size={24} />
                                     </div>
                                     <div>
-                                        <Badge variant={user.role === 'Employer' ? 'secondary' : 'default'} className={user.role === 'Employer' ? 'bg-purple-100 text-purple-700' : ''}>
-                                            {user.role}
-                                        </Badge>
+                                        <p className="text-gray-400 text-sm">Total Users</p>
+                                        <p className="text-3xl font-bold text-white">{users.length}</p>
                                     </div>
-                                    <div className="text-right">
-                                        <Button size="sm" variant="ghost" className="text-red-600 hover:bg-red-50 hover:text-red-700">
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
+                                </CardContent>
+                            </Card>
+                            <Card className="bg-gray-800 border-gray-700">
+                                <CardContent className="p-6 flex items-center space-x-4">
+                                    <div className="p-3 rounded-full bg-green-900/50 text-green-400">
+                                        <Briefcase size={24} />
                                     </div>
-                                </div>
-                            ))}
+                                    <div>
+                                        <p className="text-gray-400 text-sm">Active Jobs</p>
+                                        <p className="text-3xl font-bold text-white">{allJobs.length}</p>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                            <Card className="bg-gray-800 border-gray-700">
+                                <CardContent className="p-6 flex items-center space-x-4">
+                                    <div className="p-3 rounded-full bg-purple-900/50 text-purple-400">
+                                        <FileText size={24} />
+                                    </div>
+                                    <div>
+                                        <p className="text-gray-400 text-sm">Applications</p>
+                                        <p className="text-3xl font-bold text-white">{applications.length}</p>
+                                    </div>
+                                </CardContent>
+                            </Card>
                         </div>
                     )}
-                </div>
 
-            </div>
+                    {/* USERS TAB */}
+                    {activeTab === 'users' && (
+                        <Card className="bg-gray-800 border-gray-700 overflow-hidden">
+                            <div className="p-6">
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-left">
+                                        <thead>
+                                            <tr className="border-b border-gray-700 text-gray-400 text-sm uppercase">
+                                                <th className="pb-3 px-4">Name</th>
+                                                <th className="pb-3 px-4">Email</th>
+                                                <th className="pb-3 px-4">Role</th>
+                                                <th className="pb-3 px-4">Joined</th>
+                                                <th className="pb-3 px-4">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="text-gray-300">
+                                            {users.map((user) => (
+                                                <tr key={user._id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors">
+                                                    <td className="py-4 px-4 font-medium text-white">{user.name}</td>
+                                                    <td className="py-4 px-4">{user.email}</td>
+                                                    <td className="py-4 px-4 mb-2">
+                                                        <span className={`px-2 py-1 rounded text-xs font-semibold
+                                                            ${user.role === 'admin' ? 'bg-red-900 text-red-200' :
+                                                                user.role === 'employer' ? 'bg-blue-900 text-blue-200' :
+                                                                    'bg-green-900 text-green-200'}`}>
+                                                            {user.role}
+                                                        </span>
+                                                    </td>
+                                                    <td className="py-4 px-4">{new Date(user.createdAt).toLocaleDateString()}</td>
+                                                    <td className="py-4 px-4">
+                                                        <button onClick={() => handleDeleteUser(user._id)} className="text-gray-400 hover:text-red-500 transition-colors" title="Delete User">
+                                                            <Trash2 size={18} />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </Card>
+                    )}
+
+                    {/* JOBS TAB */}
+                    {activeTab === 'jobs' && (
+                        <Card className="bg-gray-800 border-gray-700 overflow-hidden">
+                            <div className="p-6">
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-left">
+                                        <thead>
+                                            <tr className="border-b border-gray-700 text-gray-400 text-sm uppercase">
+                                                <th className="pb-3 px-4">Title</th>
+                                                <th className="pb-3 px-4">Company</th>
+                                                <th className="pb-3 px-4">Location</th>
+                                                <th className="pb-3 px-4">Posted</th>
+                                                <th className="pb-3 px-4">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="text-gray-300">
+                                            {allJobs.map((job) => (
+                                                <tr key={job._id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors">
+                                                    <td className="py-4 px-4 font-medium text-white">{job.title}</td>
+                                                    <td className="py-4 px-4">{job.company}</td>
+                                                    <td className="py-4 px-4">{job.location}</td>
+                                                    <td className="py-4 px-4">{new Date(job.createdAt).toLocaleDateString()}</td>
+                                                    <td className="py-4 px-4">
+                                                        <button onClick={() => handleDeleteJob(job._id)} className="text-gray-400 hover:text-red-500 transition-colors" title="Delete Job">
+                                                            <Trash2 size={18} />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </Card>
+                    )}
+
+                    {/* APPLICATIONS TAB */}
+                    {activeTab === 'applications' && (
+                        <Card className="bg-gray-800 border-gray-700 overflow-hidden">
+                            <div className="p-6">
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-left">
+                                        <thead>
+                                            <tr className="border-b border-gray-700 text-gray-400 text-sm uppercase">
+                                                <th className="pb-3 px-4">Applicant</th>
+                                                <th className="pb-3 px-4">Job Title</th>
+                                                <th className="pb-3 px-4">Company</th>
+                                                <th className="pb-3 px-4">Applied Date</th>
+                                                <th className="pb-3 px-4">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="text-gray-300">
+                                            {applications.length > 0 ? (
+                                                applications.map((app) => (
+                                                    <tr key={app._id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors">
+                                                        <td className="py-4 px-4">
+                                                            <div className="font-medium text-white">{app.applicant?.name || 'Unknown'}</div>
+                                                            <div className="text-sm text-gray-500">{app.applicant?.email}</div>
+                                                        </td>
+                                                        <td className="py-4 px-4">{app.job?.title}</td>
+                                                        <td className="py-4 px-4">{app.job?.company}</td>
+                                                        <td className="py-4 px-4">{new Date(app.createdAt).toLocaleDateString()}</td>
+                                                        <td className="py-4 px-4">
+                                                            <a href={app.resumeLink} target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">View Resume</a>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="5" className="py-8 text-center text-gray-500">No applications found.</td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </Card>
+                    )}
+                </div>
+            </main>
         </div>
     );
 };

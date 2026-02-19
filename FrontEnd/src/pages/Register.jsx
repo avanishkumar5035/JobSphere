@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AuthContext from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
@@ -8,12 +9,34 @@ import { cn } from '../lib/utils';
 
 const Register = () => {
     const navigate = useNavigate();
+    const { register } = useContext(AuthContext);
     const [role, setRole] = useState('seeker'); // 'seeker' or 'employer'
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        companyName: '',
+    });
+    const { name, email, password, companyName } = formData;
+    const [error, setError] = useState(null);
 
-    const handleSubmit = (e) => {
+    const onChange = (e) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }));
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // In a real app, handle registration logic here
-        navigate(role === 'employer' ? '/dashboard/employer' : '/dashboard');
+        setError(null);
+        // Combine First/Last name for simplicity or split in backend
+        const res = await register(name, email, password, role);
+        if (res.success) {
+            navigate(role === 'employer' ? '/dashboard/employer' : '/dashboard');
+        } else {
+            setError(res.message);
+        }
     };
 
     return (
@@ -67,29 +90,20 @@ const Register = () => {
                         <form className="space-y-6" onSubmit={handleSubmit}>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
-                                        First Name
+                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Full Name
                                     </label>
                                     <Input
-                                        id="firstName"
-                                        name="firstName"
+                                        id="name"
+                                        name="name"
                                         type="text"
                                         required
-                                        placeholder="John"
+                                        placeholder="John Doe"
+                                        value={name}
+                                        onChange={onChange}
                                     />
                                 </div>
-                                <div>
-                                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
-                                        Last Name
-                                    </label>
-                                    <Input
-                                        id="lastName"
-                                        name="lastName"
-                                        type="text"
-                                        required
-                                        placeholder="Doe"
-                                    />
-                                </div>
+                                {/* Removed split First/Last Name for simplicity in this step, using single Name field as per backend model */}
                             </div>
 
                             {role === 'employer' && (
@@ -104,6 +118,8 @@ const Register = () => {
                                         required
                                         placeholder="Acme Inc."
                                         icon={Building}
+                                        value={companyName}
+                                        onChange={onChange}
                                     />
                                 </div>
                             )}
@@ -120,6 +136,8 @@ const Register = () => {
                                     required
                                     placeholder="you@example.com"
                                     icon={Mail}
+                                    value={email}
+                                    onChange={onChange}
                                 />
                             </div>
 
@@ -135,6 +153,8 @@ const Register = () => {
                                     required
                                     placeholder="••••••••"
                                     icon={Lock}
+                                    value={password}
+                                    onChange={onChange}
                                 />
                             </div>
 

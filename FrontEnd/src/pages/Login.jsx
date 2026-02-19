@@ -1,5 +1,6 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import AuthContext from '../context/AuthContext';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '../components/ui/Card';
@@ -7,11 +8,36 @@ import { Mail, Lock, Briefcase } from 'lucide-react';
 
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { login } = useContext(AuthContext); // Use AuthContext
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
+    const { email, password } = formData;
+    const [error, setError] = useState(null);
 
-    const handleSubmit = (e) => {
+    const onChange = (e) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }));
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // In a real app, handle login logic here
-        navigate('/dashboard');
+        setError(null);
+        const res = await login(email, password);
+        if (res.success) {
+            // Role-based redirection
+            // Redirect to the page they came from, or default dashboard
+            const from = location.state?.from?.pathname || (res.user.role === 'admin' ? '/admin' : (res.user.role === 'employer' ? '/dashboard/employer' : '/dashboard'));
+
+            navigate(from, { replace: true });
+            window.location.reload();
+        } else {
+            setError(res.message);
+        }
     };
 
     return (
@@ -46,6 +72,8 @@ const Login = () => {
                                     required
                                     placeholder="you@example.com"
                                     icon={Mail}
+                                    value={email}
+                                    onChange={onChange}
                                 />
                             </div>
 
@@ -68,6 +96,8 @@ const Login = () => {
                                     required
                                     placeholder="••••••••"
                                     icon={Lock}
+                                    value={password}
+                                    onChange={onChange}
                                 />
                             </div>
 

@@ -6,11 +6,13 @@ const Button = React.forwardRef(({ className, variant = 'primary', size = 'md', 
     const baseStyles = "inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50";
 
     const variants = {
-        primary: "bg-accent text-white hover:bg-blue-600 shadow-sm",
-        secondary: "bg-secondary text-white hover:bg-slate-700 shadow-sm",
-        outline: "border border-input bg-transparent hover:bg-accent hover:text-white text-gray-700",
-        ghost: "hover:bg-gray-100 text-gray-700",
-        link: "text-accent underline-offset-4 hover:underline",
+        primary: "bg-primary text-white hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all duration-300",
+        secondary: "bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 hover:text-gray-900 shadow-sm dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700",
+        accent: "bg-accent text-white hover:bg-violet-600 shadow-md hover:shadow-lg transition-all duration-300",
+        outline: "border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-white transition-all duration-300 dark:border-indigo-400 dark:text-indigo-400 dark:hover:bg-indigo-400 dark:hover:text-gray-900",
+        ghost: "hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300",
+        link: "text-primary underline-offset-4 hover:underline",
+        success: "bg-secondary text-white hover:bg-emerald-600 shadow-md",
     };
 
     const sizes = {
