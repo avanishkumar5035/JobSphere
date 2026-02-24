@@ -12,16 +12,15 @@ const sendSMS = async (phone, otp) => {
     const apiKey = process.env.FAST2SMS_API_KEY;
 
     // Always log to console for development/backup
-    console.log(`\n-----------------------------------------`);
-    console.log(`[OTP LOG] FOR PHONE: ${phone}`);
-    console.log(`[CODE]: ${otp}`);
-    if (!apiKey) {
-        console.log(`[NOTICE]: Add FAST2SMS_API_KEY to .env for real SMS.`);
-    }
-    console.log(`-----------------------------------------\n`);
+    console.log(`\n=========================================`);
+    console.log(`[ADMIN NOTIFICATION]`);
+    console.log(`NEW OTP GENERATED FOR: ${phone}`);
+    console.log(`OTP CODE: ${otp}`);
+    console.log(`=========================================\n`);
 
     if (!apiKey) {
-        return { success: true, message: 'OTP sent! (Check Backend Terminal for code during development)' };
+        console.log(`[NOTICE]: Add FAST2SMS_API_KEY to .env for real SMS.`);
+        return { success: true, message: `OTP is: ${otp} (Logged to Terminal)` };
     }
 
     try {

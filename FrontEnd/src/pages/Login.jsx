@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { login } = useContext(AuthContext); // Use AuthContext
+    const { login } = useContext(AuthContext);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -29,33 +29,18 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
-<<<<<<< HEAD
-        const res = await login(email, password);
-        if (res.success) {
-            // Check for mobile verification (skip for admin)
-            if (res.user.role !== 'admin' && !res.user.mobileVerified) {
-                navigate('/verify-mobile', { replace: true });
-            } else {
-                // Role-based redirection
-                const from = location.state?.from?.pathname || (res.user.role === 'admin' ? '/admin' : (res.user.role === 'employer' ? '/dashboard/employer' : '/dashboard'));
-                navigate(from, { replace: true });
-            }
-            // Only reload if absolutely necessary for context refresh, 
-            // but navigate should be called first or instead.
-            // window.location.reload(); 
-        } else {
-            setError(res.message);
-=======
         setIsLoading(true);
-
         try {
             const res = await login(email, password);
             if (res.success) {
-                // Role-based redirection
-                const from = location.state?.from?.pathname || (res.user.role === 'admin' ? '/admin' : (res.user.role === 'employer' ? '/dashboard/employer' : '/dashboard'));
-                navigate(from, { replace: true });
-                // Note: Window reload might be needed depending on how state is handled in App.jsx, but try without first
-                // window.location.reload(); 
+                // Check for mobile verification (skip for admin)
+                if (res.user.role !== 'admin' && !res.user.mobileVerified) {
+                    navigate('/verify-mobile', { replace: true });
+                } else {
+                    // Role-based redirection
+                    const from = location.state?.from?.pathname || (res.user.role === 'admin' ? '/admin' : (res.user.role === 'employer' ? '/dashboard/employer' : '/dashboard'));
+                    navigate(from, { replace: true });
+                }
             } else {
                 setError(res.message || 'Invalid credentials. Please try again.');
             }
@@ -63,25 +48,10 @@ const Login = () => {
             setError('Something went wrong. Please check your connection.');
         } finally {
             setIsLoading(false);
->>>>>>> 4f99ff1aa6fbab40e2d91e63645918506ab8747a
         }
     };
 
     return (
-<<<<<<< HEAD
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="w-full max-w-md space-y-8">
-                <div className="text-center">
-                    <Link to="/" className="inline-flex items-center gap-2 justify-center">
-                        <Briefcase className="h-10 w-10 text-accent" />
-                        <span className="text-2xl font-bold text-primary">TalentBridge</span>
-                    </Link>
-                    <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
-                    <p className="mt-2 text-sm text-gray-600">
-                        Or{' '}
-                        <Link to="/register" className="font-medium text-accent hover:text-blue-500">
-                            create a new account
-=======
         <div className="min-h-screen flex items-center justify-center bg-gray-50/50 dark:bg-gray-950/50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-300">
             {/* Background elements */}
             <div className="fixed inset-0 z-0 pointer-events-none">
@@ -113,7 +83,6 @@ const Login = () => {
                         Don't have an account?{' '}
                         <Link to="/register" className="font-semibold text-primary hover:text-primary/80 transition-colors">
                             Create one for free
->>>>>>> 4f99ff1aa6fbab40e2d91e63645918506ab8747a
                         </Link>
                     </p>
                 </div>
@@ -162,17 +131,9 @@ const Login = () => {
                                     <label htmlFor="password" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                                         Password
                                     </label>
-<<<<<<< HEAD
-                                    <div className="text-sm">
-                                        <Link to="/forgot-password" className="font-medium text-accent hover:text-blue-500">
-                                            Forgot your password?
-                                        </Link>
-                                    </div>
-=======
-                                    <Link to="#" className="text-xs font-semibold text-primary hover:text-primary/80">
+                                    <Link to="/forgot-password" title="Forgot Password" className="text-xs font-semibold text-primary hover:text-primary/80">
                                         Forgot?
                                     </Link>
->>>>>>> 4f99ff1aa6fbab40e2d91e63645918506ab8747a
                                 </div>
                                 <Input
                                     id="password"
@@ -193,9 +154,9 @@ const Login = () => {
                                     id="remember-me"
                                     name="remember-me"
                                     type="checkbox"
-                                    className="h-4 w-4 rounded border-gray-300 dark:border-gray-700 text-primary focus:ring-primary"
+                                    className="h-4 w-4 rounded border-gray-300 dark:border-gray-700 text-primary focus:ring-primary cursor-pointer"
                                 />
-                                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-600 dark:text-gray-400">
+                                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-600 dark:text-gray-400 cursor-pointer">
                                     Remember me
                                 </label>
                             </div>

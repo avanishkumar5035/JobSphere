@@ -3,13 +3,8 @@ import AuthContext from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
-<<<<<<< HEAD
-import { Card, CardContent } from '../components/ui/Card';
-import { Mail, Lock, Briefcase, User, Building, Phone } from 'lucide-react';
-=======
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '../components/ui/Card';
-import { Mail, Lock, Briefcase, User, Building, ChevronRight, AlertCircle, ArrowLeft, CheckCircle2 } from 'lucide-react';
->>>>>>> 4f99ff1aa6fbab40e2d91e63645918506ab8747a
+import { Mail, Lock, Briefcase, User, Building, Phone, ChevronRight, AlertCircle, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -38,20 +33,11 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
-<<<<<<< HEAD
-        // Combine First/Last name for simplicity or split in backend
-        const res = await register(name, email, password, role, phone);
-        if (res.success) {
-            navigate('/verify-mobile', { replace: true });
-        } else {
-            setError(res.message);
-=======
         setIsLoading(true);
-
         try {
-            const res = await register(name, email, password, role);
+            const res = await register(name, email, password, role, phone);
             if (res.success) {
-                navigate(role === 'employer' ? '/dashboard/employer' : '/dashboard');
+                navigate('/verify-mobile', { replace: true });
             } else {
                 setError(res.message || 'Registration failed. Please try again.');
             }
@@ -59,22 +45,10 @@ const Register = () => {
             setError('Something went wrong. Please check your connection.');
         } finally {
             setIsLoading(false);
->>>>>>> 4f99ff1aa6fbab40e2d91e63645918506ab8747a
         }
     };
 
     return (
-<<<<<<< HEAD
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="w-full max-w-md space-y-8">
-                <div className="text-center">
-                    <Link to="/" className="inline-flex items-center gap-2 justify-center">
-                        <Briefcase className="h-10 w-10 text-accent" />
-                        <span className="text-2xl font-bold text-primary">TalentBridge</span>
-                    </Link>
-                    <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">Create your account</h2>
-                    <p className="mt-2 text-sm text-gray-600">
-=======
         <div className="min-h-screen flex items-center justify-center bg-gray-50/50 dark:bg-gray-950/50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-300">
             {/* Background elements */}
             <div className="fixed inset-0 z-0 pointer-events-none">
@@ -103,7 +77,6 @@ const Register = () => {
                     </motion.div>
                     <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Create your account</h2>
                     <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
->>>>>>> 4f99ff1aa6fbab40e2d91e63645918506ab8747a
                         Already have an account?{' '}
                         <Link to="/login" className="font-semibold text-primary hover:text-primary/80 transition-colors">
                             Sign in here
@@ -241,52 +214,24 @@ const Register = () => {
                                         onChange={onChange}
                                     />
                                 </div>
+
+                                <div className="space-y-2">
+                                    <label htmlFor="phone" className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">
+                                        Phone Number
+                                    </label>
+                                    <Input
+                                        id="phone"
+                                        name="phone"
+                                        type="tel"
+                                        placeholder="+1 (555) 000-0000"
+                                        icon={Phone}
+                                        className="h-12 border-gray-200 dark:border-gray-800 focus:ring-primary/20 bg-white/50 dark:bg-gray-900/50"
+                                        value={phone}
+                                        onChange={onChange}
+                                    />
+                                </div>
                             </div>
 
-<<<<<<< HEAD
-                            <div>
-                                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Phone Number
-                                </label>
-                                <Input
-                                    id="phone"
-                                    name="phone"
-                                    type="tel"
-                                    placeholder="+1 (555) 000-0000"
-                                    icon={Phone}
-                                    value={phone}
-                                    onChange={onChange}
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Password
-                                </label>
-                                <Input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="new-password"
-                                    required
-                                    placeholder="••••••••"
-                                    icon={Lock}
-                                    value={password}
-                                    onChange={onChange}
-                                />
-                            </div>
-
-                            <div className="flex items-center">
-                                <input
-                                    id="terms"
-                                    name="terms"
-                                    type="checkbox"
-                                    required
-                                    className="h-4 w-4 rounded border-gray-300 text-accent focus:ring-accent"
-                                />
-                                <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
-                                    I agree to the <a href="#" className="text-accent hover:underline">Terms of Service</a> and <a href="#" className="text-accent hover:underline">Privacy Policy</a>
-=======
                             <div className="flex items-start ml-1 mt-2">
                                 <div className="flex items-center h-5">
                                     <input
@@ -299,7 +244,6 @@ const Register = () => {
                                 </div>
                                 <label htmlFor="terms" className="ml-3 text-sm text-gray-600 dark:text-gray-400 leading-tight">
                                     I agree to the <Link to="#" className="text-primary hover:text-primary/80 font-semibold underline-offset-4 hover:underline">Terms of Service</Link> and <Link to="#" className="text-primary hover:text-primary/80 font-semibold underline-offset-4 hover:underline">Privacy Policy</Link>
->>>>>>> 4f99ff1aa6fbab40e2d91e63645918506ab8747a
                                 </label>
                             </div>
 

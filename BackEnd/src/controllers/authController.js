@@ -217,18 +217,23 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
     const message = `You requested a password reset. \n\nYour 6-digit OTP is: ${otp} \n\nThis OTP is valid for 10 minutes.`;
 
     try {
-        await sendEmail({
+        const emailRes = await sendEmail({
             email: user.email,
             subject: 'Password Reset OTP',
             message,
         });
 
-        res.status(200).json({ success: true, message: 'OTP sent to email' });
+        const debugMsg = (process.env.NODE_ENV === 'development') ? ` (OTP: ${otp})` : '';
+        res.status(200).json({
+            success: true,
+            message: `OTP sent to email${debugMsg}`
+        });
     } catch (err) {
         console.error('Email failed to send. OTP is:', otp, err.message);
-        // Instead of failing the entire flow because the user hasn't set up email credentials yet,
-        // we'll send a success response but log the OTP to the console for testing.
-        res.status(200).json({ success: true, message: 'OTP generated (Check server console if email is not configured)' });
+        res.status(200).json({
+            success: true,
+            message: `OTP generated: ${otp} (Check server console)`
+        });
     }
 });
 
@@ -357,13 +362,22 @@ const sendMobileOtp = asyncHandler(async (req, res, next) => {
     const smsRes = await sendSMS(phone, otp);
 
     if (smsRes.success) {
+        const debugMsg = (process.env.NODE_ENV === 'development') ? ` (OTP: ${otp})` : '';
         res.status(200).json({
             success: true,
-            message: smsRes.message
+            message: `${smsRes.message}${debugMsg}`
         });
     } else {
-        res.status(500);
-        throw new Error(smsRes.message || 'Error sending SMS OTP');
+        // Fallback for development: even if SMS fails, if we're in dev, show the OTP
+        if (process.env.NODE_ENV === 'development') {
+            res.status(200).json({
+                success: true,
+                message: `Gateway Failed. OTP is: ${otp} (Check Terminal)`
+            });
+        } else {
+            res.status(500);
+            throw new Error(smsRes.message || 'Error sending SMS OTP');
+        }
     }
 });
 
