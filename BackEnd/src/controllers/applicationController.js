@@ -70,10 +70,35 @@ const getJobApplicants = asyncHandler(async (req, res) => {
     }
 
     const applications = await Application.find({ job: req.params.jobId })
-        .populate('applicant', 'name email')
+        .populate('applicant', 'name email headline skills resume')
         .sort('-createdAt');
 
     res.status(200).json(applications);
+});
+
+// @desc    Update application status
+// @route   PUT /api/applications/:id/status
+// @access  Private (Employer)
+const updateApplicationStatus = asyncHandler(async (req, res) => {
+    const { status } = req.body;
+    const application = await Application.findById(req.params.id).populate('job');
+
+    if (!application) {
+        res.status(404);
+        throw new Error('Application not found');
+    }
+
+    // Check if user is the employer who posted the job
+    const job = await Job.findById(application.job);
+    if (job.postedBy.toString() !== req.user.id && req.user.role !== 'admin') {
+        res.status(403);
+        throw new Error('Not authorized to update status for this application');
+    }
+
+    application.status = status;
+    await application.save();
+
+    res.status(200).json(application);
 });
 
 // @desc    Get all applications (Admin)
@@ -98,4 +123,5 @@ module.exports = {
     getMyApplications,
     getJobApplicants,
     getAllApplications,
+    updateApplicationStatus,
 };

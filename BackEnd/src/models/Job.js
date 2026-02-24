@@ -22,6 +22,24 @@ const jobSchema = mongoose.Schema(
             type: String,
             required: [true, 'Please add salary range'],
         },
+        minSalary: {
+            type: Number,
+            default: 0
+        },
+        maxSalary: {
+            type: Number,
+            default: 0
+        },
+        experience: {
+            type: Number,
+            default: 0, // Min years required
+        },
+        workMode: {
+            type: String,
+            required: [true, 'Please add work mode'],
+            enum: ['On-site', 'Remote', 'Hybrid'],
+            default: 'On-site',
+        },
         type: {
             type: String,
             required: [true, 'Please add job type'],
@@ -40,6 +58,10 @@ const jobSchema = mongoose.Schema(
             type: mongoose.Schema.ObjectId,
             ref: 'User',
             required: true
+        },
+        companyLogo: {
+            type: String,
+            default: ''
         },
         status: {
             type: String,
