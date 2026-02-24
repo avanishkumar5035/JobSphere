@@ -25,9 +25,9 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const register = async (name, email, password, role) => {
+    const register = async (name, email, password, role, phone) => {
         try {
-            const userData = await authService.register({ name, email, password, role });
+            const userData = await authService.register({ name, email, password, role, phone });
             setUser(userData);
             return { success: true };
         } catch (error) {
@@ -40,8 +40,25 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     };
 
+    const updateUser = (updatedUserData) => {
+        const newUser = { ...user, ...updatedUserData };
+        setUser(newUser);
+        localStorage.setItem("user", JSON.stringify(newUser));
+    };
+
+    const updateProfile = async (profileData) => {
+        try {
+            const updatedUser = await authService.updateProfile(profileData, user.token);
+            setUser(updatedUser);
+            localStorage.setItem("user", JSON.stringify(updatedUser)); // authService.updateProfile already does this, but being redundant for safety
+            return { success: true, user: updatedUser };
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || 'Profile update failed' };
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+        <AuthContext.Provider value={{ user, login, register, logout, updateUser, updateProfile, loading }}>
             {children}
         </AuthContext.Provider>
     );

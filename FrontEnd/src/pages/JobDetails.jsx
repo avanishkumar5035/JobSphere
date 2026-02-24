@@ -14,7 +14,7 @@ const JobDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const location = useLocation();
-    const { user } = useContext(AuthContext);
+    const { user, updateUser } = useContext(AuthContext);
     const [job, setJob] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -26,6 +26,15 @@ const JobDetails = () => {
     const [applying, setApplying] = useState(false);
     const [applySuccess, setApplySuccess] = useState(false);
     const [alreadyApplied, setAlreadyApplied] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+    const [shareSuccess, setShareSuccess] = useState(false);
+
+    const isJobSaved = user?.savedJobs?.some(id => id === id || id._id === id);
+    // Wait, the above line has a bug (id === id). Fixed below in the actual logic.
+    const isJobSavedLocal = user?.savedJobs?.some(savedId => {
+        const sid = typeof savedId === 'string' ? savedId : savedId._id;
+        return sid === id;
+    });
 
     useEffect(() => {
         const fetchJob = async () => {
@@ -93,6 +102,37 @@ const JobDetails = () => {
         }
     };
 
+    const handleSave = async () => {
+        if (!user) {
+            alert('Please login to save jobs');
+            return;
+        }
+
+        setIsSaving(true);
+        try {
+            const res = await jobService.toggleSaveJob(id, user.token);
+            if (res.savedJobs) {
+                updateUser({ savedJobs: res.savedJobs });
+            }
+        } catch (error) {
+            console.error('Error toggling save job:', error);
+            alert(error.response?.data?.message || 'Failed to save job');
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    const handleShare = () => {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            setShareSuccess(true);
+            setTimeout(() => setShareSuccess(false), 2000);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+            alert('Failed to copy link to clipboard');
+        });
+    };
+
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
@@ -147,13 +187,33 @@ const JobDetails = () => {
                                 </div>
                             </div>
 
-                            <div className="flex gap-3 w-full sm:w-auto mt-4 sm:mt-16">
-                                <Button variant="outline" size="icon" className="dark:bg-gray-700 dark:text-white dark:border-gray-600">
-                                    <Bookmark className="h-4 w-4" />
+                            <div className="flex gap-3 w-full sm:w-auto mt-4 sm:mt-16 relative">
+                                <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className={`transition-colors ${isJobSavedLocal ? 'text-accent border-accent' : 'dark:bg-gray-700 dark:text-white dark:border-gray-600'}`}
+                                    onClick={handleSave}
+                                    disabled={isSaving}
+                                    title={isJobSavedLocal ? "Remove from saved" : "Save Job"}
+                                >
+                                    <Bookmark className={`h-4 w-4 ${isJobSavedLocal ? 'fill-current' : ''}`} />
                                 </Button>
-                                <Button variant="outline" size="icon" className="dark:bg-gray-700 dark:text-white dark:border-gray-600">
-                                    <Share2 className="h-4 w-4" />
-                                </Button>
+                                <div className="relative">
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        className="dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                                        onClick={handleShare}
+                                        title="Share Job"
+                                    >
+                                        <Share2 className="h-4 w-4" />
+                                    </Button>
+                                    {shareSuccess && (
+                                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded shadow-lg whitespace-nowrap animate-in fade-in slide-in-from-bottom-2">
+                                            Link Copied!
+                                        </div>
+                                    )}
+                                </div>
                                 <Button
                                     className="flex-1 sm:flex-none px-8 dark:bg-primary dark:text-white"
                                     onClick={handleApplyClick}

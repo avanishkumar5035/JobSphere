@@ -87,7 +87,7 @@ const AdminLogin = () => {
                                     id="password"
                                     name="password"
                                     type="password"
-                                    autoComplete="current-password"
+                                    autoComplete="off"
                                     required
                                     placeholder="••••••••"
                                     icon={Lock}

@@ -29,12 +29,17 @@ const Login = () => {
         setError(null);
         const res = await login(email, password);
         if (res.success) {
-            // Role-based redirection
-            // Redirect to the page they came from, or default dashboard
-            const from = location.state?.from?.pathname || (res.user.role === 'admin' ? '/admin' : (res.user.role === 'employer' ? '/dashboard/employer' : '/dashboard'));
-
-            navigate(from, { replace: true });
-            window.location.reload();
+            // Check for mobile verification (skip for admin)
+            if (res.user.role !== 'admin' && !res.user.mobileVerified) {
+                navigate('/verify-mobile', { replace: true });
+            } else {
+                // Role-based redirection
+                const from = location.state?.from?.pathname || (res.user.role === 'admin' ? '/admin' : (res.user.role === 'employer' ? '/dashboard/employer' : '/dashboard'));
+                navigate(from, { replace: true });
+            }
+            // Only reload if absolutely necessary for context refresh, 
+            // but navigate should be called first or instead.
+            // window.location.reload(); 
         } else {
             setError(res.message);
         }
@@ -46,7 +51,7 @@ const Login = () => {
                 <div className="text-center">
                     <Link to="/" className="inline-flex items-center gap-2 justify-center">
                         <Briefcase className="h-10 w-10 text-accent" />
-                        <span className="text-2xl font-bold text-primary">JobSphere</span>
+                        <span className="text-2xl font-bold text-primary">TalentBridge</span>
                     </Link>
                     <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
                     <p className="mt-2 text-sm text-gray-600">
@@ -83,16 +88,16 @@ const Login = () => {
                                         Password
                                     </label>
                                     <div className="text-sm">
-                                        <a href="#" className="font-medium text-accent hover:text-blue-500">
+                                        <Link to="/forgot-password" className="font-medium text-accent hover:text-blue-500">
                                             Forgot your password?
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                                 <Input
                                     id="password"
                                     name="password"
                                     type="password"
-                                    autoComplete="current-password"
+                                    autoComplete="off"
                                     required
                                     placeholder="••••••••"
                                     icon={Lock}

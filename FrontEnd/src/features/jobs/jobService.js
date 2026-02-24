@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { API_BASE_URL } from '../../config/api';
 
-const API_URL = 'http://localhost:5001/api/jobs/';
+const API_URL = `${API_BASE_URL}/api/jobs/`;
 
-// Get all jobs
-const getJobs = async () => {
-    const response = await axios.get(API_URL);
+// Get all jobs with optional filters
+const getJobs = async (params = {}) => {
+    const response = await axios.get(API_URL, { params });
     return response.data;
 };
 
@@ -50,12 +51,25 @@ const deleteJob = async (id, token) => {
     return response.data;
 };
 
+// Save/Unsave job
+const toggleSaveJob = async (id, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
+    const response = await axios.post(`${API_URL}${id}/save`, {}, config);
+    return response.data;
+};
+
 const jobService = {
     getJobs,
     getJob,
     createJob,
     updateJob,
     deleteJob,
+    toggleSaveJob,
 };
 
 export default jobService;

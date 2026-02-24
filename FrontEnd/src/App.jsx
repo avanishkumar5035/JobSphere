@@ -11,8 +11,16 @@ import EmployerDashboard from './pages/Dashboard/Employer';
 import AdminPanel from './pages/Admin/AdminPanel';
 import AdminLogin from './pages/Admin/AdminLogin';
 import PostJob from './pages/PostJob';
+import ForgotPassword from './pages/ForgotPassword';
+import CandidateProfile from './pages/CandidateProfile';
+import ManageJobApplicants from './pages/Dashboard/ManageJobApplicants';
+import MobileVerificationPage from './pages/MobileVerificationPage';
 import AdminRoute from './components/routing/AdminRoute';
 import PrivateRoute from './components/routing/PrivateRoute';
+
+import Companies from './pages/Companies';
+import CompanyDetails from './pages/CompanyDetails';
+import Pricing from './pages/Pricing';
 
 import { ThemeProvider } from './context/ThemeContext';
 
@@ -20,15 +28,27 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="min-h-screen flex flex-col relative overflow-hidden transition-colors duration-300">
-          {/* Animated Background Elements */}
-          <div className="fixed inset-0 z-0 pointer-events-none">
-            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-400/30 dark:bg-purple-900/20 blur-[100px] animate-pulse" />
-            <div className="absolute top-[20%] right-[-5%] w-[30%] h-[30%] rounded-full bg-indigo-400/30 dark:bg-indigo-900/20 blur-[100px] animate-pulse delay-1000" />
-            <div className="absolute bottom-[-10%] left-[20%] w-[35%] h-[35%] rounded-full bg-blue-400/30 dark:bg-blue-900/20 blur-[100px] animate-pulse delay-2000" />
-            {/* Grid Pattern Overlay */}
-            <div className="absolute inset-0 bg-grid-pattern opacity-[0.4] dark:opacity-[0.2]" />
+        <div className="min-h-screen flex flex-col relative overflow-hidden bg-background transition-colors duration-300 text-foreground">
+          {/* Subtle Background Elements */}
+          <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+            {/* Very subtle gradient to break solid white/gray */}
+            <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-primary/5 to-transparent dark:from-primary/20" />
+
+            {/* Clean Grid Pattern */}
+            <div className="absolute inset-0 bg-grid-pattern opacity-[0.4] dark:opacity-[0.1]" style={{ backgroundPosition: 'center' }} />
           </div>
+
+          <style jsx>{`
+            .bg-grid-pattern {
+                background-size: 50px 50px;
+                background-image: linear-gradient(to right, var(--color-gray-200) 1px, transparent 1px),
+                                linear-gradient(to bottom, var(--color-gray-200) 1px, transparent 1px);
+            }
+            .dark .bg-grid-pattern {
+                background-image: linear-gradient(to right, var(--color-gray-800) 1px, transparent 1px),
+                                linear-gradient(to bottom, var(--color-gray-800) 1px, transparent 1px);
+            }
+          `}</style>
 
           {/* Content Wrapper */}
           <div className="relative z-10 flex flex-col min-h-screen">
@@ -38,17 +58,22 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/jobs" element={<Jobs />} />
                 <Route path="/jobs/:id" element={<JobDetails />} />
-                {/* Add more routes here as we build them */}
+                <Route path="/companies" element={<Companies />} />
+                <Route path="/companies/:id" element={<CompanyDetails />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/companies" element={<div className="p-10 text-center dark:text-white">Companies Page (Coming Soon)</div>} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/premium" element={<Pricing />} />
                 <Route path="/admin/login" element={<AdminLogin />} />
 
                 {/* Protected User Routes */}
                 <Route element={<PrivateRoute />}>
                   <Route path="/dashboard" element={<SeekerDashboard />} />
                   <Route path="/dashboard/employer" element={<EmployerDashboard />} />
+                  <Route path="/dashboard/manage-applicants/:jobId" element={<ManageJobApplicants />} />
                   <Route path="/post-job" element={<PostJob />} />
+                  <Route path="/verify-mobile" element={<MobileVerificationPage />} />
+                  <Route path="/profile" element={<CandidateProfile />} />
                 </Route>
 
                 {/* Protected Admin Routes */}

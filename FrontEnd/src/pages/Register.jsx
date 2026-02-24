@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Card, CardContent } from '../components/ui/Card';
-import { Mail, Lock, Briefcase, User, Building } from 'lucide-react';
+import { Mail, Lock, Briefcase, User, Building, Phone } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 const Register = () => {
@@ -14,10 +14,11 @@ const Register = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        phone: '',
         password: '',
         companyName: '',
     });
-    const { name, email, password, companyName } = formData;
+    const { name, email, phone, password, companyName } = formData;
     const [error, setError] = useState(null);
 
     const onChange = (e) => {
@@ -31,9 +32,9 @@ const Register = () => {
         e.preventDefault();
         setError(null);
         // Combine First/Last name for simplicity or split in backend
-        const res = await register(name, email, password, role);
+        const res = await register(name, email, password, role, phone);
         if (res.success) {
-            navigate(role === 'employer' ? '/dashboard/employer' : '/dashboard');
+            navigate('/verify-mobile', { replace: true });
         } else {
             setError(res.message);
         }
@@ -45,7 +46,7 @@ const Register = () => {
                 <div className="text-center">
                     <Link to="/" className="inline-flex items-center gap-2 justify-center">
                         <Briefcase className="h-10 w-10 text-accent" />
-                        <span className="text-2xl font-bold text-primary">JobSphere</span>
+                        <span className="text-2xl font-bold text-primary">TalentBridge</span>
                     </Link>
                     <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">Create your account</h2>
                     <p className="mt-2 text-sm text-gray-600">
@@ -137,6 +138,21 @@ const Register = () => {
                                     placeholder="you@example.com"
                                     icon={Mail}
                                     value={email}
+                                    onChange={onChange}
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Phone Number
+                                </label>
+                                <Input
+                                    id="phone"
+                                    name="phone"
+                                    type="tel"
+                                    placeholder="+1 (555) 000-0000"
+                                    icon={Phone}
+                                    value={phone}
                                     onChange={onChange}
                                 />
                             </div>
