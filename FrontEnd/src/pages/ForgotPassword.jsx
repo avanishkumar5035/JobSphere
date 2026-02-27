@@ -5,7 +5,7 @@ import { API_BASE_URL } from '../config/api';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/Card';
-import { Mail, Key, Lock, ArrowLeft } from 'lucide-react';
+import { Mail, Key, Lock, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
@@ -17,6 +17,8 @@ const ForgotPassword = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const API_URL = `${API_BASE_URL}/api/auth`;
     const handleSendOTP = async (e) => {
@@ -175,27 +177,47 @@ const ForgotPassword = () => {
                             <form className="space-y-6" onSubmit={handleResetPassword}>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
-                                    <Input
-                                        type="password"
-                                        required
-                                        placeholder="••••••••"
-                                        icon={Lock}
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        autoComplete="new-password"
-                                    />
+                                    <div className="relative">
+                                        <Input
+                                            type={showPassword ? 'text' : 'password'}
+                                            required
+                                            placeholder="••••••••"
+                                            icon={Lock}
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            autoComplete="new-password"
+                                            className="pr-10"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 outline-none"
+                                        >
+                                            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                        </button>
+                                    </div>
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
-                                    <Input
-                                        type="password"
-                                        required
-                                        placeholder="••••••••"
-                                        icon={Lock}
-                                        value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
-                                        autoComplete="new-password"
-                                    />
+                                    <div className="relative">
+                                        <Input
+                                            type={showConfirmPassword ? 'text' : 'password'}
+                                            required
+                                            placeholder="••••••••"
+                                            icon={Lock}
+                                            value={confirmPassword}
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                            autoComplete="new-password"
+                                            className="pr-10"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 outline-none"
+                                        >
+                                            {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                        </button>
+                                    </div>
                                 </div>
                                 <Button type="submit" className="w-full" disabled={loading}>
                                     {loading ? 'Resetting...' : 'Reset Password'}

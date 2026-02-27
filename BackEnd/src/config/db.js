@@ -25,13 +25,29 @@ const connectDB = async () => {
     try {
         const conn = await mongoose.connect(process.env.MONGO_URI, {
             serverSelectionTimeoutMS: 5000,
-            socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-            connectTimeoutMS: 10000, // Give up initial connection after 10 seconds
+            socketTimeoutMS: 45000,
+            connectTimeoutMS: 10000,
         });
 
         console.log(`MongoDB Connected Initial: ${conn.connection.host}`);
     } catch (error) {
-        console.error(`Error connecting to MongoDB: ${error.message}`);
+        console.error(`Error connecting to Primary MongoDB: ${error.message}`);
+
+        // Fallback to local MongoDB if primary fails
+        const localUri = 'mongodb://localhost:27017/jobsphere';
+        if (process.env.MONGO_URI !== localUri) {
+            console.log('Attempting fallback to local MongoDB...');
+            try {
+                const localConn = await mongoose.connect(localUri, {
+                    serverSelectionTimeoutMS: 5000,
+                });
+                console.log(`MongoDB Connected (Local Fallback): ${localConn.connection.host}`);
+                return;
+            } catch (localError) {
+                console.error(`Local MongoDB fallback failed: ${localError.message}`);
+            }
+        }
+
         console.log('Retrying connection in 5 seconds...');
         setTimeout(connectDB, 5000);
     }

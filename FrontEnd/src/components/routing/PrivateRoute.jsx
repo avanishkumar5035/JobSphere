@@ -15,11 +15,6 @@ const PrivateRoute = () => {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
-    // Force mobile verification for seekers/employers if not yet verified
-    // Exclude admins and the verification page itself to avoid infinite loops
-    if (user.role !== 'admin' && !user.mobileVerified && location.pathname !== '/verify-mobile') {
-        return <Navigate to="/verify-mobile" replace />;
-    }
 
     // If authorized, render child routes
     return <Outlet />;

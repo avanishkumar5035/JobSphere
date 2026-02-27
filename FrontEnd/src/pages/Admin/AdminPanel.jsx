@@ -86,9 +86,9 @@ const AdminPanel = () => {
     };
 
     const stats = {
-        users: users.length,
-        jobs: allJobs.length,
-        applications: applications.length,
+        users: Array.isArray(users) ? users.length : 0,
+        jobs: Array.isArray(allJobs) ? allJobs.length : 0,
+        applications: Array.isArray(applications) ? applications.length : 0,
         revenue: '12.4k' // Placeholder for now
     };
 
@@ -363,6 +363,101 @@ const AdminPanel = () => {
                                             </div>
                                         </div>
                                     ))}
+                                </motion.div>
+                            )}
+
+                            {/* APPLICATIONS TAB */}
+                            {activeTab === 'applications' && (
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="space-y-8"
+                                >
+                                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                                        {[
+                                            { label: 'Applied', count: (applications || []).filter(a => a?.status === 'applied').length, color: 'text-blue-500' },
+                                            { label: 'Reviewing', count: (applications || []).filter(a => a?.status === 'reviewing').length, color: 'text-yellow-500' },
+                                            { label: 'Shortlisted', count: (applications || []).filter(a => a?.status === 'shortlisted').length, color: 'text-purple-500' },
+                                            { label: 'Rejected', count: (applications || []).filter(a => a?.status === 'rejected').length, color: 'text-red-500' },
+                                        ].map(stat => (
+                                            <div key={stat.label} className="glass-card p-6 rounded-3xl border border-white/5 flex flex-col items-center">
+                                                <span className={`text-2xl font-black ${stat.color}`}>{stat.count}</span>
+                                                <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">{stat.label}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="glass-card rounded-[40px] border border-white/5 overflow-hidden shadow-premium">
+                                        <div className="overflow-x-auto">
+                                            <table className="w-full text-left">
+                                                <thead>
+                                                    <tr className="border-b border-white/5 bg-white/5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
+                                                        <th className="py-8 px-10">Candidate</th>
+                                                        <th className="py-8 px-10">Target Role</th>
+                                                        <th className="py-8 px-10">Submission Date</th>
+                                                        <th className="py-8 px-10">Current Status</th>
+                                                        <th className="py-8 px-10 text-right">Operations</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody className="divide-y divide-white/5">
+                                                    {(applications || []).map((app) => (
+                                                        <tr key={app?._id} className="hover:bg-white/[0.02] transition-colors group">
+                                                            <td className="py-8 px-10">
+                                                                <div>
+                                                                    <div className="text-lg font-black text-white group-hover:text-primary transition-colors">{app?.applicant?.name || 'Unknown Candidate'}</div>
+                                                                    <div className="text-xs font-bold text-gray-500">{app?.applicant?.email || 'No Email'}</div>
+                                                                </div>
+                                                            </td>
+                                                            <td className="py-8 px-10">
+                                                                <div>
+                                                                    <div className="text-sm font-black text-gray-200">{app?.job?.title || 'Position Decommissioned'}</div>
+                                                                    <div className="text-[10px] font-bold text-primary uppercase tracking-widest">{app?.job?.company || 'N/A'}</div>
+                                                                </div>
+                                                            </td>
+                                                            <td className="py-8 px-10 text-sm font-bold text-gray-400">
+                                                                {app?.createdAt ? new Date(app.createdAt).toLocaleDateString() : 'N/A'}
+                                                            </td>
+                                                            <td className="py-8 px-10">
+                                                                <select
+                                                                    value={app.status}
+                                                                    onChange={async (e) => {
+                                                                        const newStatus = e.target.value;
+                                                                        try {
+                                                                            await applicationService.updateApplicationStatus(app._id, newStatus, user.token);
+                                                                            setApplications(applications.map(a => a._id === app._id ? { ...a, status: newStatus } : a));
+                                                                        } catch (error) {
+                                                                            alert('Failed to update status');
+                                                                        }
+                                                                    }}
+                                                                    className={`bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-[10px] font-black uppercase tracking-widest focus:outline-none focus:border-primary/50 transition-all ${app.status === 'rejected' ? 'text-red-500' :
+                                                                        app.status === 'hired' ? 'text-green-500' :
+                                                                            app.status === 'shortlisted' ? 'text-purple-500' :
+                                                                                'text-blue-500'
+                                                                        }`}
+                                                                >
+                                                                    <option value="applied">Applied</option>
+                                                                    <option value="reviewing">Reviewing</option>
+                                                                    <option value="shortlisted">Shortlisted</option>
+                                                                    <option value="rejected">Rejected</option>
+                                                                    <option value="hired">Hired</option>
+                                                                </select>
+                                                            </td>
+                                                            <td className="py-8 px-10 text-right">
+                                                                <a
+                                                                    href={app?.resumeLink || '#'}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className={`inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary hover:underline ${!app?.resumeLink && 'opacity-50 cursor-not-allowed pointer-events-none'}`}
+                                                                >
+                                                                    Review Dossier <ExternalLink size={14} />
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </motion.div>
                             )}
 

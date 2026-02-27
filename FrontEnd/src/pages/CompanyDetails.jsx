@@ -11,6 +11,13 @@ const CompanyDetails = () => {
     const [company, setCompany] = useState(null);
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isFollowing, setIsFollowing] = useState(false);
+    const [showCultureModal, setShowCultureModal] = useState(false);
+
+    const handleFollowToggle = () => {
+        setIsFollowing(!isFollowing);
+        // In a real app, you would make an API call here to save the follow state
+    };
 
     useEffect(() => {
         const fetchCompanyAndJobs = async () => {
@@ -89,9 +96,44 @@ const CompanyDetails = () => {
                                     </a>
                                 </div>
                             </div>
-                            <div className="flex gap-3">
-                                <Button size="lg" className="rounded-xl px-8 shadow-lg shadow-primary/20">Follow Company</Button>
-                                <Button variant="outline" size="lg" className="rounded-xl px-8 dark:border-gray-600 dark:text-gray-300">View Culture</Button>
+                            <div className="flex gap-3 relative">
+                                <Button
+                                    size="lg"
+                                    onClick={handleFollowToggle}
+                                    className={`rounded-xl px-8 shadow-lg transition-all duration-300 ${isFollowing ? 'bg-gray-100 text-gray-800 hover:bg-red-50 dark:bg-gray-700 dark:text-white dark:hover:bg-red-900/20' : 'shadow-primary/20'}`}
+                                    variant={isFollowing ? 'outline' : 'default'}
+                                >
+                                    {isFollowing ? 'Following' : 'Follow Company'}
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    size="lg"
+                                    onClick={() => setShowCultureModal(true)}
+                                    className="rounded-xl px-8 dark:border-gray-600 dark:text-gray-300"
+                                >
+                                    View Culture
+                                </Button>
+
+                                {/* Simple Action/Culture Popup */}
+                                {showCultureModal && (
+                                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowCultureModal(false)}>
+                                        <div
+                                            className="bg-white dark:bg-gray-800 rounded-[32px] p-8 max-w-lg w-full shadow-2xl border border-gray-100 dark:border-gray-700"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            <div className="flex justify-between items-center mb-6">
+                                                <h3 className="text-2xl font-black text-gray-900 dark:text-white">Life at {company.companyName || company.name}</h3>
+                                                <button onClick={() => setShowCultureModal(false)} className="text-gray-400 hover:text-gray-600 dark:hover:text-white">✕</button>
+                                            </div>
+                                            <div className="space-y-4 text-gray-600 dark:text-gray-300">
+                                                <p><strong>Core Values:</strong> Innovation, Integrity, and Inclusivity.</p>
+                                                <p><strong>Perks:</strong> Flexible working hours, comprehensive health insurance, continuous learning allowances, and regular team offsites.</p>
+                                                <p><strong>Work Environment:</strong> We believe in a highly collaborative and autonomous environment where every engineer has a voice in product decisions.</p>
+                                            </div>
+                                            <Button className="w-full mt-8 rounded-xl" onClick={() => setShowCultureModal(false)}>Close</Button>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

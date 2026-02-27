@@ -98,6 +98,30 @@ const SeekerDashboard = () => {
                     </div>
                 </motion.div>
 
+                {/* Mobile Verification Reminder */}
+                {!user?.mobileVerified && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mb-12 p-6 bg-amber-50/50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800/50 rounded-[32px] flex flex-col md:flex-row items-center justify-between gap-6"
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="h-12 w-12 rounded-2xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                                <AlertCircle className="h-6 w-6" />
+                            </div>
+                            <div>
+                                <h4 className="text-lg font-black text-amber-900 dark:text-amber-100">Verify your mobile number</h4>
+                                <p className="text-sm font-medium text-amber-700 dark:text-amber-400">Increase your account security and visibility to recruiters by verifying your contact info.</p>
+                            </div>
+                        </div>
+                        <Link to="/verify-mobile" className="w-full md:w-auto">
+                            <Button size="lg" className="w-full md:w-auto rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-black px-8">
+                                Verify Now
+                            </Button>
+                        </Link>
+                    </motion.div>
+                )}
+
                 {/* Dashboard Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-20">
                     <motion.div
@@ -191,9 +215,9 @@ const SeekerDashboard = () => {
                                                     </div>
                                                     <div className="w-full sm:w-auto">
                                                         <span className={`inline-flex px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-[0.2em] border shadow-sm ${app.status === 'hired' ? 'bg-purple-50 text-purple-600 border-purple-100' :
-                                                                app.status === 'shortlisted' ? 'bg-green-50 text-green-600 border-green-100' :
-                                                                    app.status === 'reviewing' ? 'bg-amber-50 text-amber-600 border-amber-100' :
-                                                                        'bg-blue-50 text-blue-600 border-blue-100'
+                                                            app.status === 'shortlisted' ? 'bg-green-50 text-green-600 border-green-100' :
+                                                                app.status === 'reviewing' ? 'bg-amber-50 text-amber-600 border-amber-100' :
+                                                                    'bg-blue-50 text-blue-600 border-blue-100'
                                                             }`}>
                                                             {app.status || 'Received'}
                                                         </span>
@@ -214,9 +238,9 @@ const SeekerDashboard = () => {
                                                             }}
                                                             transition={{ duration: 1.5, ease: "easeInOut" }}
                                                             className={`h-full ${app.status === 'hired' ? 'bg-purple-500' :
-                                                                    app.status === 'shortlisted' ? 'bg-green-500' :
-                                                                        app.status === 'reviewing' ? 'bg-amber-500' :
-                                                                            'bg-blue-500'
+                                                                app.status === 'shortlisted' ? 'bg-green-500' :
+                                                                    app.status === 'reviewing' ? 'bg-amber-500' :
+                                                                        'bg-blue-500'
                                                                 }`}
                                                         />
                                                     </div>

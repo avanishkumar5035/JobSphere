@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Card, CardContent } from '../../components/ui/Card';
-import { Shield, Lock } from 'lucide-react';
+import { Shield, Lock, Eye, EyeOff } from 'lucide-react';
 
 const AdminLogin = () => {
     const navigate = useNavigate();
@@ -15,6 +15,7 @@ const AdminLogin = () => {
     });
     const { email, password } = formData;
     const [error, setError] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -30,8 +31,7 @@ const AdminLogin = () => {
 
         if (res.success) {
             if (res.user.role === 'admin') {
-                navigate('/admin');
-                window.location.reload();
+                window.location.href = '/admin';
             } else {
                 setError('Access Denied: You do not have admin privileges.');
                 // Optionally logout the user immediately if you want strictly separate sessions
@@ -83,18 +83,27 @@ const AdminLogin = () => {
                                 <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">
                                     Password
                                 </label>
-                                <Input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="off"
-                                    required
-                                    placeholder="••••••••"
-                                    icon={Lock}
-                                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-red-500 focus:ring-red-500"
-                                    value={password}
-                                    onChange={onChange}
-                                />
+                                <div className="relative">
+                                    <Input
+                                        id="password"
+                                        name="password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        autoComplete="off"
+                                        required
+                                        placeholder="••••••••"
+                                        icon={Lock}
+                                        className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-red-500 focus:ring-red-500 pr-10"
+                                        value={password}
+                                        onChange={onChange}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                                    >
+                                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                    </button>
+                                </div>
                             </div>
 
                             <Button type="submit" className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3">

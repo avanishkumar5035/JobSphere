@@ -198,7 +198,17 @@ const CandidateProfile = () => {
                             <h1 className="text-3xl font-bold text-gray-900 tracking-tight">{user?.name}</h1>
                             <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-2 text-gray-500">
                                 <span className="flex items-center gap-1.5 font-medium text-sm sm:text-base"><Mail className="h-4 w-4" /> {user?.email}</span>
-                                <span className="flex items-center gap-1.5 font-medium text-sm sm:text-base"><Phone className="h-4 w-4" /> {user?.phone || 'Add phone'}</span>
+                                <span className="flex items-center gap-1.5 font-medium text-sm sm:text-base">
+                                    <Phone className="h-4 w-4" />
+                                    {user?.phone || 'Add phone'}
+                                    {user?.phone && (
+                                        user?.mobileVerified ? (
+                                            <Badge variant="secondary" className="bg-green-50 text-green-600 border-green-100 text-[10px] py-0 px-2 rounded-full">Verified</Badge>
+                                        ) : (
+                                            <Link to="/verify-mobile" className="text-[10px] text-primary hover:underline font-bold ml-1">Verify Now</Link>
+                                        )
+                                    )}
+                                </span>
                             </div>
                         </div>
 

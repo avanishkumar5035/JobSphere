@@ -51,11 +51,24 @@ const getJobApplicants = async (jobId, token) => {
     return response.data;
 };
 
+// Update application status (Admin/Employer)
+const updateApplicationStatus = async (id, status, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
+    const response = await axios.put(`${API_URL}${id}/status`, { status }, config);
+    return response.data;
+};
+
 const applicationService = {
     applyForJob,
     getMyApplications,
     getAllApplications,
     getJobApplicants,
+    updateApplicationStatus,
 };
 
 export default applicationService;

@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '../components/ui/Card';
-import { Mail, Lock, Briefcase, User, Building, Phone, ChevronRight, AlertCircle, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Mail, Lock, Briefcase, User, Building, Phone, ChevronRight, AlertCircle, ArrowLeft, CheckCircle2, Eye, EyeOff } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -22,6 +22,7 @@ const Register = () => {
     const { name, email, phone, password, companyName } = formData;
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -201,18 +202,28 @@ const Register = () => {
                                     <label htmlFor="password" className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">
                                         Password
                                     </label>
-                                    <Input
-                                        id="password"
-                                        name="password"
-                                        type="password"
-                                        autoComplete="new-password"
-                                        required
-                                        placeholder="At least 6 characters"
-                                        icon={Lock}
-                                        className="h-12 border-gray-200 dark:border-gray-800 focus:ring-primary/20 bg-white/50 dark:bg-gray-900/50"
-                                        value={password}
-                                        onChange={onChange}
-                                    />
+                                    <div className="relative group/pass">
+                                        <Input
+                                            id="password"
+                                            name="password"
+                                            type={showPassword ? 'text' : 'password'}
+                                            autoComplete="new-password"
+                                            required
+                                            placeholder="At least 6 characters"
+                                            icon={Lock}
+                                            className="h-12 border-gray-200 dark:border-gray-800 focus:ring-primary/20 bg-white/50 dark:bg-gray-900/50 pr-12"
+                                            value={password}
+                                            onChange={onChange}
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-gray-400 hover:text-primary hover:bg-primary/5 transition-all outline-none"
+                                            title={showPassword ? "Hide Password" : "Show Password"}
+                                        >
+                                            {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <div className="space-y-2">

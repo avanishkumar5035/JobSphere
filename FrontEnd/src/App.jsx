@@ -21,6 +21,7 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import Companies from './pages/Companies';
 import CompanyDetails from './pages/CompanyDetails';
 import Pricing from './pages/Pricing';
+import Resources from './pages/Resources';
 
 import { ThemeProvider } from './context/ThemeContext';
 
@@ -60,6 +61,7 @@ function App() {
                 <Route path="/jobs/:id" element={<JobDetails />} />
                 <Route path="/companies" element={<Companies />} />
                 <Route path="/companies/:id" element={<CompanyDetails />} />
+                <Route path="/resources" element={<Resources />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />

@@ -66,7 +66,7 @@ const Navbar = () => {
 
                         {user ? (
                             <div className="flex items-center gap-6">
-                                <Link to={user.role === 'employer' ? '/dashboard/employer' : '/dashboard'} className="flex items-center gap-3 group">
+                                <Link to={user.role === 'admin' ? '/admin' : (user.role === 'employer' ? '/dashboard/employer' : '/dashboard')} className="flex items-center gap-3 group">
                                     <div className="text-right hidden sm:block">
                                         <p className="text-xs font-black text-gray-400 uppercase tracking-widest leading-none mb-1">Signed in as</p>
                                         <p className="text-sm font-bold text-gray-900 dark:text-white">{user.name}</p>

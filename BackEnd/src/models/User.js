@@ -85,6 +85,10 @@ const userSchema = mongoose.Schema(
             type: String,
             default: ''
         },
+        companyBanner: {
+            type: String,
+            default: ''
+        },
         hiringSteps: [
             {
                 step: Number,

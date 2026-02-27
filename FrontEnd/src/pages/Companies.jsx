@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Building, MapPin, ExternalLink, Activity, Info } from 'lucide-react';
+import { Building, MapPin, ExternalLink, Activity, Info, ChevronRight, Briefcase } from 'lucide-react';
 import { Card, CardContent } from '../components/ui/Card';
+import { Button } from '../components/ui/Button';
 import { API_BASE_URL } from '../config/api';
 import { useNavigate } from 'react-router-dom';
 
@@ -54,49 +55,85 @@ const Companies = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {companies.map((company, index) => {
                             const name = company.companyName || company.name;
-                            const logo = companyLogos[name];
+                            // Priority: Backend Logo field -> Hardcoded mapping -> Default icon
+                            let logo = company.companyLogo ? `${API_BASE_URL}${company.companyLogo}` : companyLogos[name];
 
                             return (
                                 <div
-                                    key={company._id}
+                                    key={company?._id}
                                     className="transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl opacity-0 animate-fade-in-up cursor-pointer"
                                     style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}
-                                    onClick={() => navigate(`/companies/${company._id}`)}
+                                    onClick={() => navigate(`/companies/${company?._id}`)}
                                 >
                                     <Card className="h-full border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-800 overflow-hidden group rounded-3xl">
-                                        <div className="h-32 bg-gradient-to-br from-primary to-indigo-600 relative overflow-hidden">
-                                            <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
-                                            <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-widest">
-                                                Active
+                                        <div className="relative h-48 overflow-hidden">
+                                            {company.companyBanner ? (
+                                                <img
+                                                    src={company.companyBanner.startsWith('http') ? company.companyBanner : `${API_BASE_URL}${company.companyBanner}`}
+                                                    alt="banner"
+                                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-gradient-to-br from-primary via-blue-700 to-indigo-900 group-hover:rotate-3 transition-transform duration-700" />
+                                            )}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                            <div className="absolute top-6 right-6">
+                                                <div className="bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full">
+                                                    <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Active</span>
+                                                </div>
                                             </div>
                                         </div>
                                         <CardContent className="px-8 pb-8 pt-0 relative">
-                                            <div className="absolute -top-12 left-8 bg-white dark:bg-gray-700 p-4 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-600 w-24 h-24 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-500">
-                                                {logo ? (
-                                                    <img src={logo} alt={name} className="max-w-full max-h-full object-contain filter dark:invert-0" />
-                                                ) : (
-                                                    <Building className="h-10 w-10 text-primary" />
-                                                )}
-                                            </div>
-                                            <div className="mt-16">
-                                                <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
-                                                    {name}
-                                                </h3>
-                                                <div className="flex items-center text-gray-500 dark:text-gray-400 text-sm font-medium mb-4">
-                                                    <MapPin className="h-4 w-4 mr-1.5 text-primary" />
-                                                    {company.companyLocation || 'Remote Friendly'}
+                                            <div className="flex flex-col md:flex-row md:items-end gap-6 -mt-16 mb-8 relative z-20">
+                                                <div className="bg-white dark:bg-gray-800 p-4 rounded-[32px] shadow-2xl shadow-black/20 border border-gray-100 dark:border-white/5 w-28 h-28 flex items-center justify-center transform group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500 shrink-0 overflow-hidden backdrop-blur-xl">
+                                                    {logo ? (
+                                                        <img
+                                                            src={logo.startsWith('http') ? logo : `${API_BASE_URL}${logo}`}
+                                                            alt={name}
+                                                            className="max-w-[80%] max-h-[80%] object-contain filter dark:invert-0"
+                                                        />
+                                                    ) : (
+                                                        <Building className="h-10 w-10 text-primary" />
+                                                    )}
                                                 </div>
-                                                <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-2 mb-6 min-h-[40px]">
-                                                    {company.companyBio || `Discover the culture and hiring process at ${name}.`}
-                                                </p>
-                                                <div className="flex items-center justify-between border-t border-gray-100 dark:border-gray-700 pt-6">
-                                                    <span className="flex items-center text-primary font-bold text-sm">
-                                                        Learn More <Info className="h-4 w-4 ml-1.5" />
-                                                    </span>
-                                                    <div className="flex items-center text-sm font-semibold text-gray-400">
-                                                        View Roles
-                                                        <ExternalLink className="h-4 w-4 ml-1.5 transform group-hover:translate-x-1 transition-transform" />
+                                                <div className="flex-1 min-w-0 pb-2">
+                                                    <h3 className="text-3xl font-black text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors tracking-tighter leading-none">
+                                                        {name}
+                                                    </h3>
+                                                    <div className="flex items-center text-gray-500 dark:text-gray-400 text-[11px] font-black uppercase tracking-[0.2em]">
+                                                        <MapPin className="h-3 w-3 mr-1.5 text-primary shrink-0" />
+                                                        <span className="truncate">{company.companyLocation || 'Remote Friendly'}</span>
                                                     </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="space-y-6">
+                                                <p className="text-gray-600 dark:text-gray-400 text-sm font-medium leading-relaxed line-clamp-2 min-h-[40px]">
+                                                    {company.companyBio || `Collaborate with world-class professional organizations and accelerate your career growth at ${name}.`}
+                                                </p>
+
+                                                <div className="pt-6 border-t border-gray-100 dark:border-white/5 flex items-center justify-between">
+                                                    <div className="flex -space-x-3">
+                                                        {[...Array(3)].map((_, i) => (
+                                                            <div key={i} className="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800 bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
+                                                                <div className="text-[8px] font-bold text-gray-500">U{i + 1}</div>
+                                                            </div>
+                                                        ))}
+                                                        <div className="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800 bg-primary/10 flex items-center justify-center">
+                                                            <span className="text-[8px] font-black text-primary">+12</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <Button
+                                                        variant="ghost"
+                                                        className="h-10 px-6 rounded-xl text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 border border-primary/10"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            navigate(`/companies/${company?._id}`);
+                                                        }}
+                                                    >
+                                                        Review Dossier <ChevronRight className="ml-2 h-4 w-4" />
+                                                    </Button>
                                                 </div>
                                             </div>
                                         </CardContent>

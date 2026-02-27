@@ -4,7 +4,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '../components/ui/Card';
-import { Mail, Lock, Briefcase, ChevronRight, AlertCircle, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, Briefcase, ChevronRight, AlertCircle, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Login = () => {
@@ -18,6 +18,7 @@ const Login = () => {
     const { email, password } = formData;
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -33,14 +34,8 @@ const Login = () => {
         try {
             const res = await login(email, password);
             if (res.success) {
-                // Check for mobile verification (skip for admin)
-                if (res.user.role !== 'admin' && !res.user.mobileVerified) {
-                    navigate('/verify-mobile', { replace: true });
-                } else {
-                    // Role-based redirection
-                    const from = location.state?.from?.pathname || (res.user.role === 'admin' ? '/admin' : (res.user.role === 'employer' ? '/dashboard/employer' : '/dashboard'));
-                    navigate(from, { replace: true });
-                }
+                const from = location.state?.from?.pathname || (res.user.role === 'admin' ? '/admin' : (res.user.role === 'employer' ? '/dashboard/employer' : '/dashboard'));
+                navigate(from, { replace: true });
             } else {
                 setError(res.message || 'Invalid credentials. Please try again.');
             }
@@ -135,18 +130,28 @@ const Login = () => {
                                         Forgot?
                                     </Link>
                                 </div>
-                                <Input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="off"
-                                    required
-                                    placeholder="••••••••"
-                                    icon={Lock}
-                                    className="h-12 border-gray-200 dark:border-gray-800 focus:ring-primary/20"
-                                    value={password}
-                                    onChange={onChange}
-                                />
+                                <div className="relative group/pass">
+                                    <Input
+                                        id="password"
+                                        name="password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        autoComplete="off"
+                                        required
+                                        placeholder="••••••••"
+                                        icon={Lock}
+                                        className="h-12 border-gray-200 dark:border-gray-800 focus:ring-primary/20 pr-12"
+                                        value={password}
+                                        onChange={onChange}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-gray-400 hover:text-primary hover:bg-primary/5 transition-all outline-none focus:ring-2 focus:ring-primary/20"
+                                        title={showPassword ? "Hide Password" : "Show Password"}
+                                    >
+                                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                    </button>
+                                </div>
                             </div>
 
                             <div className="flex items-center ml-1">
