@@ -24,6 +24,7 @@ import Pricing from './pages/Pricing';
 import Resources from './pages/Resources';
 
 import { ThemeProvider } from './context/ThemeContext';
+import StarryBackground from './components/shared/StarryBackground';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <div className="min-h-screen flex flex-col relative overflow-hidden bg-background transition-colors duration-300 text-foreground">
           {/* Subtle Background Elements */}
           <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+            <StarryBackground />
             {/* Very subtle gradient to break solid white/gray */}
             <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-primary/5 to-transparent dark:from-primary/20" />
 

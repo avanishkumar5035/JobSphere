@@ -12,10 +12,10 @@ const Footer = () => {
                             <div className="bg-primary p-1 rounded">
                                 <Briefcase className="h-5 w-5 text-white" />
                             </div>
-                            <span className="text-lg font-bold text-primary dark:text-white">TalentBridge</span>
+                            <span className="text-lg font-bold text-primary dark:text-white">JobSphere</span>
                         </div>
                         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                            Connecting top talent with the best professional opportunities worldwide. Build your future with TalentBridge.
+                            Connecting top talent with the best professional opportunities worldwide. Build your future with JobSphere.
                         </p>
                         <div className="flex space-x-4">
                             <a href="#" className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
@@ -62,10 +62,11 @@ const Footer = () => {
                         </ul>
                     </div>
                 </div>
-                <div className="mt-8 border-t border-gray-200 dark:border-gray-800 pt-8">
-                    <p className="text-xs text-gray-400 dark:text-gray-500 text-center">
-                        &copy; {new Date().getFullYear()} TalentBridge. All rights reserved.
+                <div className="mt-16 pt-8 border-t border-gray-100 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+                        &copy; {new Date().getFullYear()} JobSphere. All rights reserved.
                     </p>
+                    <div className="flex gap-6 text-sm font-bold text-gray-500 dark:text-gray-400"></div>
                 </div>
             </div>
         </footer>

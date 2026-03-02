@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../ui/Button';
-import { Briefcase, Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import AuthContext from '../../context/AuthContext';
 import ThemeContext from '../../context/ThemeContext';
+import LogoIcon from '../shared/LogoIcon';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -31,11 +32,11 @@ const Navbar = () => {
                 <div className="flex h-16 justify-between items-center">
                     <div className="flex items-center">
                         <Link to="/" className="flex items-center gap-2 group">
-                            <div className="bg-primary p-2 rounded-xl transform group-hover:rotate-6 transition-transform shadow-lg shadow-primary/20">
-                                <Briefcase className="h-6 w-6 text-white" />
+                            <div className="bg-primary p-2 rounded-xl transform group-hover:rotate-6 transition-transform shadow-lg shadow-primary/20 text-white">
+                                <LogoIcon className="h-6 w-6" />
                             </div>
                             <span className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter">
-                                Talent<span className="text-primary">Bridge</span>
+                                Job<span className="text-primary">Sphere</span>
                             </span>
                         </Link>
                         <div className="hidden lg:ml-12 lg:flex lg:space-x-8">

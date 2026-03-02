@@ -217,12 +217,13 @@ const CompanyDetails = () => {
 
                         <div className="bg-gradient-to-br from-gray-900 to-primary/20 p-8 rounded-3xl text-white shadow-xl">
                             <Star className="h-10 w-10 text-yellow-400 mb-4 fill-yellow-400" />
-                            <h3 className="text-xl font-bold mb-2">Company Rating</h3>
-                            <div className="flex items-baseline gap-2 mb-4">
-                                <span className="text-4xl font-extrabold">4.8</span>
-                                <span className="text-gray-400">/ 5.0</span>
+                            <div className="mt-8 flex items-center gap-4 py-4 border-y border-gray-100 dark:border-gray-800">
+                                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-bold">4.8</div>
+                                <div>
+                                    <p className="font-bold text-gray-900 dark:text-white">Highly Recommended</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Based on 500+ employee reviews on JobSphere.</p>
+                                </div>
                             </div>
-                            <p className="text-sm text-gray-300">Based on 500+ employee reviews on TalentBridge.</p>
                         </div>
                     </div>
                 </div>

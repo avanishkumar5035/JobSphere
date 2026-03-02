@@ -52,7 +52,7 @@ const Home = () => {
                             <Zap className="h-3 w-3 fill-primary" /> The future of recruitment is here
                         </motion.div>
                         <h1 className="text-6xl md:text-8xl font-black text-gray-900 dark:text-white tracking-tighter leading-tight mb-8">
-                            Find your <span className="text-gradient">dream career</span> <br className="hidden md:block" /> with TalentBridge.
+                            Find your <span className="text-gradient">dream career</span> <br className="hidden md:block" /> with JobSphere.
                         </h1>
                         <p className="max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400 font-medium">
                             Join over 2 million professionals and 50,000+ top companies building the world's most innovative teams.
@@ -300,7 +300,7 @@ const Home = () => {
                     <Badge className="mb-8 bg-blue-500/10 text-blue-400 border-blue-500/20 px-4 py-1 font-black uppercase tracking-widest">Join the Future of Work</Badge>
                     <h2 className="text-5xl md:text-6xl font-black text-white mb-10 tracking-tight leading-tight">Ready to Elevate Your Professional Career?</h2>
                     <p className="text-xl text-gray-400 mb-16 max-w-2xl mx-auto font-medium leading-relaxed">
-                        Join 2 million+ professionals who have already found their dream roles at TalentBridge.
+                        Join 2 million+ professionals who have already found their dream roles at JobSphere.
                         Your next big opportunity is just a click away.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-6 justify-center">
