@@ -25,11 +25,13 @@ import Resources from './pages/Resources';
 
 import { ThemeProvider } from './context/ThemeContext';
 import StarryBackground from './components/shared/StarryBackground';
+import AIChatbot from './components/shared/AIChatbot';
 
 function App() {
   return (
     <ThemeProvider>
       <Router>
+        <AIChatbot />
         <div className="min-h-screen flex flex-col relative overflow-hidden bg-background transition-colors duration-300 text-foreground">
           {/* Subtle Background Elements */}
           <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
@@ -75,7 +77,6 @@ function App() {
                   <Route path="/dashboard" element={<SeekerDashboard />} />
                   <Route path="/dashboard/employer" element={<EmployerDashboard />} />
                   <Route path="/dashboard/manage-applicants/:jobId" element={<ManageJobApplicants />} />
-                  <Route path="/post-job" element={<PostJob />} />
                   <Route path="/verify-mobile" element={<MobileVerificationPage />} />
                   <Route path="/profile" element={<CandidateProfile />} />
                 </Route>
@@ -83,6 +84,7 @@ function App() {
                 {/* Protected Admin Routes */}
                 <Route element={<AdminRoute />}>
                   <Route path="/admin" element={<AdminPanel />} />
+                  <Route path="/post-job" element={<PostJob />} />
                 </Route>
               </Routes>
             </main>

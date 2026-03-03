@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import authService from '../features/auth/authService';
 import { Button } from '../components/ui/Button';
@@ -17,15 +17,18 @@ const MobileVerificationPage = () => {
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
 
+    const location = useLocation();
+
     useEffect(() => {
         if (!user) {
             navigate('/login');
             return;
         }
         if (user.mobileVerified) {
-            navigate(user.role === 'employer' ? '/dashboard/employer' : '/dashboard');
+            const redirectPath = location.state?.from?.pathname || (user.role === 'employer' ? '/dashboard/employer' : '/dashboard');
+            navigate(redirectPath);
         }
-    }, [user, navigate]);
+    }, [user, navigate, location]);
 
     const handleSendOtp = async () => {
         setError('');
@@ -47,13 +50,21 @@ const MobileVerificationPage = () => {
 
             const res = await authService.sendMobileOtp(phoneNumber, user.token);
             if (res.success) {
-                setMessage(res.message);
+                setMessage(res.otp ? `Your OTP is: ${res.otp}` : res.message);
+                if (res.otp) {
+                    setOtp(res.otp);
+                }
                 setStep('verify');
                 setIsEditingPhone(false);
             }
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to send OTP. Please try again.');
-            setStep('initial');
+            if (err.response?.status === 401) {
+                logout();
+                navigate('/login');
+            } else {
+                setError(err.response?.data?.message || 'Failed to send OTP. Please try again.');
+                setStep('initial');
+            }
         }
     };
 

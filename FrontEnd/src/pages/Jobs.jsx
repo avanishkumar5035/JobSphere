@@ -4,6 +4,7 @@ import { Button } from '../components/ui/Button';
 import JobCard from '../components/shared/JobCard';
 import FilterSidebar from '../components/shared/FilterSidebar';
 import CompanyCluster from '../components/shared/CompanyCluster';
+import { useLocation } from 'react-router-dom';
 import { Search, MapPin, SlidersHorizontal } from 'lucide-react';
 import jobService from '../features/jobs/jobService';
 
@@ -14,6 +15,8 @@ const Jobs = () => {
     const [visibleJobs, setVisibleJobs] = useState(5);
     const [sortBy, setSortBy] = useState('newest');
 
+    const location = useLocation();
+
     // Filter states
     const [selectedTypes, setSelectedTypes] = useState([]);
     const [selectedSalaries, setSelectedSalaries] = useState([]);
@@ -21,9 +24,9 @@ const Jobs = () => {
     const [selectedWorkModes, setSelectedWorkModes] = useState([]);
     const [selectedExperience, setSelectedExperience] = useState(null);
 
-    // Search states
-    const [searchTitle, setSearchTitle] = useState('');
-    const [searchLocation, setSearchLocation] = useState('');
+    // Search states (init from router state if present)
+    const [searchTitle, setSearchTitle] = useState(location.state?.keyword || '');
+    const [searchLocation, setSearchLocation] = useState(location.state?.location || '');
 
     const fetchJobs = async () => {
         setLoading(true);
@@ -40,12 +43,19 @@ const Jobs = () => {
             if (selectedExperience !== null) params.experience = selectedExperience;
             if (selectedLocations.length > 0) params.location = selectedLocations.join(',');
 
-            // Salary handling - just taking the first one for now or we could sum them
-            // In a real app, we might want to handle multiple ranges on backend
+            // Salary handling - get true MIN and MAX across all selected ranges
             if (selectedSalaries.length > 0) {
-                const ranges = selectedSalaries[0].split('-');
-                params.minSalary = ranges[0];
-                if (ranges[1]) params.maxSalary = ranges[1];
+                let absoluteMin = Infinity;
+                let absoluteMax = 0;
+
+                selectedSalaries.forEach(range => {
+                    const [min, max] = range.split('-');
+                    if (Number(min) < absoluteMin) absoluteMin = Number(min);
+                    if (max && Number(max) > absoluteMax) absoluteMax = Number(max);
+                });
+
+                params.minSalary = absoluteMin === Infinity ? 0 : absoluteMin;
+                params.maxSalary = absoluteMax;
             }
 
             const data = await jobService.getJobs(params);

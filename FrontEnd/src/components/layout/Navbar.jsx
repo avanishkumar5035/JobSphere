@@ -31,9 +31,9 @@ const Navbar = () => {
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 justify-between items-center">
                     <div className="flex items-center">
-                        <Link to="/" className="flex items-center gap-2 group">
-                            <div className="bg-primary p-2 rounded-xl transform group-hover:rotate-6 transition-transform shadow-lg shadow-primary/20 text-white">
-                                <LogoIcon className="h-6 w-6" />
+                        <Link to="/" className="flex items-center gap-3">
+                            <div className="flex-shrink-0">
+                                <LogoIcon className="h-10 w-10" />
                             </div>
                             <span className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter">
                                 Job<span className="text-primary">Sphere</span>
@@ -95,9 +95,6 @@ const Navbar = () => {
                                     </Button>
                                 </Link>
                                 <div className="h-8 w-px bg-gray-200 dark:bg-gray-800 mx-2"></div>
-                                <Link to="/post-job" className="hidden lg:block text-xs font-black uppercase tracking-widest text-gray-400 hover:text-primary transition-colors">
-                                    Employers
-                                </Link>
                             </div>
                         )}
                     </div>

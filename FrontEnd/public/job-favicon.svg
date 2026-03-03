@@ -1,0 +1,20 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Left Circular Arc -->
+  <path d="M 60 5 A 48 48 0 0 0 5 65 A 47 47 0 0 0 35 95 L 40 85 A 37 37 0 0 1 15 55 A 38 38 0 0 1 55 15 Z" fill="#000" />
+  
+  <!-- Sweeping Upward Arrow -->
+  <path d="M 15 80 C 40 100 80 80 85 40 L 95 40 L 80 0 L 65 40 L 75 40 C 72 65 45 80 25 70 Z" fill="#000" />
+  
+  <!-- Briefcase -->
+  <path d="M 35 35 L 35 28 C 35 25 38 23 42 23 L 58 23 C 62 23 65 25 65 28 L 65 35" fill="none" stroke="#000" stroke-width="5" />
+  <rect x="25" y="35" width="50" height="32" rx="2" fill="#000" />
+  
+  <!-- Briefcase Details (White) -->
+  <path d="M 25 50 Q 50 60 75 50" stroke="#fff" stroke-width="2" fill="none" />
+  <rect x="45" y="48" width="10" height="8" rx="1" fill="#fff" />
+  
+  <!-- Mini World Map Smudge at top -->
+  <path d="M 45 10 C 47 7 51 5 53 7 C 56 9 55 13 52 16 C 50 18 47 16 46 15 C 44 14 43 12 45 10 Z" fill="#000" />
+  <!-- A tiny island below it -->
+  <path d="M 54 18 C 55 17 56 18 55 19 Z" fill="#000" stroke="#000" stroke-width="1.5" />
+</svg>

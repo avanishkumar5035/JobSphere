@@ -264,28 +264,35 @@ const CandidateProfile = () => {
                             </CardHeader>
                             <CardContent className="p-6 space-y-4">
                                 {user?.resume ? (
-                                    <div className="p-4 bg-blue-50/50 rounded-xl border-2 border-blue-100 flex items-center justify-between group hover:border-blue-300 transition-all cursor-pointer">
+                                    <a
+                                        href={user.resume.startsWith('http') ? user.resume : `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5002'}${user.resume}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="p-4 bg-blue-50/50 rounded-xl border-2 border-blue-100 flex items-center justify-between group hover:border-blue-300 transition-all cursor-pointer block"
+                                    >
                                         <div className="flex items-center gap-4 overflow-hidden">
                                             <div className="bg-white p-2.5 rounded-lg border border-blue-200 shadow-sm transition-transform group-hover:scale-110">
                                                 <FileText className="h-6 w-6 text-blue-600" />
                                             </div>
-                                            <div className="truncate text-sm font-bold text-gray-700">Resume_Latest.pdf</div>
+                                            <div className="truncate text-sm font-bold text-gray-700" title={user.resume.split('/').pop()}>
+                                                {user.resume.split('/').pop()}
+                                            </div>
                                         </div>
-                                        <a href={user.resume} target="_blank" rel="noreferrer" className="text-primary hover:text-primary/80 transition-transform active:scale-95">
+                                        <div className="text-primary hover:text-primary/80 transition-transform active:scale-95">
                                             <ChevronRight className="h-6 w-6" />
-                                        </a>
-                                    </div>
+                                        </div>
+                                    </a>
                                 ) : (
                                     <div className="text-center py-8 border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50/30">
                                         <Upload className="h-8 w-8 text-gray-300 mx-auto mb-2" />
                                         <p className="text-xs text-gray-400 font-bold tracking-tight uppercase">No resume uploaded</p>
                                     </div>
                                 )}
-                                <label className="block">
+                                <label className="block cursor-pointer">
                                     <input type="file" className="hidden" onChange={handleFileUpload} accept=".pdf,.doc,.docx" />
-                                    <Button variant="outline" className="w-full gap-2 text-sm font-bold h-11 border-2 hover:bg-gray-50 rounded-xl transition-all" asChild>
-                                        <span><Upload className="h-4 w-4" /> {user?.resume ? 'Update Resume' : 'Add Resume'}</span>
-                                    </Button>
+                                    <div className="flex items-center justify-center w-full gap-2 text-sm font-bold h-11 border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-xl transition-all duration-300">
+                                        <Upload className="h-4 w-4" /> {user?.resume ? 'Update Resume' : 'Add Resume'}
+                                    </div>
                                 </label>
                             </CardContent>
                         </Card>

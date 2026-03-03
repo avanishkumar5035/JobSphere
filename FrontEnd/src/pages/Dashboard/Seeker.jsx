@@ -151,7 +151,9 @@ const SeekerDashboard = () => {
                                 </div>
                                 <h4 className="font-black text-xs uppercase tracking-[0.2em] text-gray-400 mb-2">Profile Strength</h4>
                                 <p className="text-gray-500 font-medium text-sm mb-8 italic">"You're in the top 5% for your role."</p>
-                                <Button className="w-full rounded-2xl h-14 font-black shadow-lg shadow-primary/10 premium-button">Optimize Profile</Button>
+                                <Link to="/profile">
+                                    <Button className="w-full rounded-2xl h-14 font-black shadow-lg shadow-primary/10 premium-button">Optimize Profile</Button>
+                                </Link>
                             </div>
                         </div>
 

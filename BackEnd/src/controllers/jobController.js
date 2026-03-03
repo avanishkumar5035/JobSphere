@@ -96,9 +96,9 @@ const getJob = asyncHandler(async (req, res) => {
 // @route   POST /api/jobs
 // @access  Private (Employer/Admin)
 const createJob = asyncHandler(async (req, res) => {
-    if (req.user.role !== 'employer' && req.user.role !== 'admin') {
+    if (req.user.role !== 'admin') {
         res.status(403);
-        throw new Error('Not authorized to post jobs');
+        throw new Error('Not authorized to post jobs. Administrators only.');
     }
 
     const job = await Job.create({

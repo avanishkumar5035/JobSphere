@@ -25,6 +25,7 @@ app.use('/api/auth', require('./src/routes/authRoutes'));
 app.use('/api/jobs', require('./src/routes/jobRoutes'));
 app.use('/api/applications', require('./src/routes/applicationRoutes'));
 app.use('/api/upload', require('./src/routes/uploadRoutes'));
+app.use('/api/ai', require('./src/routes/aiRoutes'));
 
 const dirname = path.resolve();
 app.use('/uploads', express.static(path.join(dirname, '/uploads')));

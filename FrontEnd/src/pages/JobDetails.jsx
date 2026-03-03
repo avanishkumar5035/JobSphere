@@ -79,6 +79,8 @@ const JobDetails = () => {
             navigate('/login', { state: { from: location } });
         } else if (user.role !== 'seeker') {
             alert("Only job seekers can apply.");
+        } else if (user.mobileVerified === false) {
+            navigate('/verify-mobile', { state: { from: location } });
         } else {
             setShowApplyModal(true);
         }

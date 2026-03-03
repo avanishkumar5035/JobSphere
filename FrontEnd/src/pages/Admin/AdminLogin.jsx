@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Card, CardContent } from '../../components/ui/Card';
-import { Shield, Lock, Eye, EyeOff } from 'lucide-react';
+import { Lock, Eye, EyeOff } from 'lucide-react';
+import LogoIcon from '../../components/shared/LogoIcon';
 
 const AdminLogin = () => {
     const navigate = useNavigate();
@@ -45,10 +46,10 @@ const AdminLogin = () => {
         <div className="min-h-screen flex items-center justify-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
             <div className="w-full max-w-md space-y-8">
                 <div className="text-center">
-                    <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-red-900 mb-4">
-                        <Shield className="h-8 w-8 text-red-500" />
+                    <div className="inline-flex items-center justify-center mb-4">
+                        <LogoIcon className="h-16 w-16" />
                     </div>
-                    <h2 className="text-3xl font-bold tracking-tight text-white">Admin Portal</h2>
+                    <h2 className="text-3xl font-bold tracking-tight text-white mb-1"><span className="text-primary tracking-tighter">Job</span><span className="italic tracking-tighter">Sphere</span> Control</h2>
                     <p className="mt-2 text-sm text-gray-400">
                         Authorized Personnel Only
                     </p>

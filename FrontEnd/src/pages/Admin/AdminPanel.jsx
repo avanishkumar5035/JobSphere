@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../../components/ui/Button';
 import { Card, CardContent } from '../../components/ui/Card';
@@ -25,12 +25,15 @@ import {
     Clock,
     FileText,
     Trash2,
-    BarChart2 // Added back as it's used in the sidebar
+    BarChart2, // Added back as it's used in the sidebar
+    Plus,      // Added for the post job button
+    Eye        // Added for view details
 } from 'lucide-react';
 import authService from '../../features/auth/authService';
 import jobService from '../../features/jobs/jobService';
 import applicationService from '../../features/application/applicationService';
 import AuthContext from '../../context/AuthContext';
+import LogoIcon from '../../components/shared/LogoIcon';
 
 const AdminPanel = () => {
     const { user } = useContext(AuthContext);
@@ -39,6 +42,7 @@ const AdminPanel = () => {
     const [allJobs, setAllJobs] = useState([]);
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         const fetchAllData = async () => {
@@ -97,12 +101,12 @@ const AdminPanel = () => {
             {/* Glassy Sidebar */}
             <aside className="w-80 bg-black/40 backdrop-blur-3xl border-r border-white/5 hidden xl:flex flex-col z-50">
                 <div className="p-10">
-                    <div className="flex items-center gap-3 group">
-                        <div className="bg-primary p-2 rounded-xl transform group-hover:rotate-6 transition-transform shadow-lg shadow-primary/20">
-                            <Briefcase className="h-6 w-6 text-white" />
+                    <div className="flex items-center gap-3">
+                        <div className="flex-shrink-0">
+                            <LogoIcon className="h-10 w-10" />
                         </div>
                         <span className="text-2xl font-black text-white tracking-tighter">
-                            Talent<span className="text-primary italic">Bridge</span>
+                            Job<span className="text-primary italic">Sphere</span>
                         </span>
                     </div>
                     <div className="mt-2 text-[10px] font-black uppercase tracking-[0.4em] text-gray-600">Admin Control</div>
@@ -158,6 +162,13 @@ const AdminPanel = () => {
                         <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Live Telemetry & Management</p>
                     </div>
                     <div className="flex items-center gap-6">
+                        {activeTab === 'jobs' && (
+                            <Link to="/post-job">
+                                <Button className="bg-primary hover:bg-primary-dark font-black tracking-widest text-xs uppercase rounded-xl px-6 py-2 shadow-lg premium-button">
+                                    <Plus className="h-4 w-4 inline mr-2" /> Post New Job
+                                </Button>
+                            </Link>
+                        )}
                         <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-xl border border-white/5">
                             <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
                             <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">System Nominal</span>
@@ -186,18 +197,23 @@ const AdminPanel = () => {
                                 >
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                                         {[
-                                            { label: 'Total Users', value: stats.users, icon: <Users />, trend: '+12%', color: 'from-blue-500 to-indigo-600' },
-                                            { label: 'Active Jobs', value: stats.jobs, icon: <Briefcase />, trend: '+5%', color: 'from-emerald-500 to-teal-600' },
-                                            { label: 'Applications', value: stats.applications, icon: <Layout />, trend: '+18%', color: 'from-purple-500 to-pink-600' },
-                                            { label: 'Revenue', value: stats.revenue, icon: <TrendingUp />, trend: '+24%', color: 'from-orange-500 to-amber-600' }
+                                            { label: 'Total Users', value: stats.users, icon: <Users />, trend: '+12%', color: 'from-blue-500 to-indigo-600', tabId: 'users' },
+                                            { label: 'Active Jobs', value: stats.jobs, icon: <Briefcase />, trend: '+5%', color: 'from-emerald-500 to-teal-600', tabId: 'jobs' },
+                                            { label: 'Applications', value: stats.applications, icon: <Layout />, trend: '+18%', color: 'from-purple-500 to-pink-600', tabId: 'applications' },
+                                            { label: 'Revenue', value: stats.revenue, icon: <TrendingUp />, trend: '+24%', color: 'from-orange-500 to-amber-600', tabId: 'overview' }
                                         ].map((item, i) => (
                                             <motion.div
                                                 key={item.label}
+                                                onClick={() => {
+                                                    if (item.tabId !== 'overview') {
+                                                        setActiveTab(item.tabId);
+                                                    }
+                                                }}
                                                 initial={{ opacity: 0, scale: 0.9 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 transition={{ delay: i * 0.1 }}
                                                 whileHover={{ y: -5 }}
-                                                className="glass-card p-8 rounded-[32px] border-none shadow-premium relative overflow-hidden group"
+                                                className={`glass-card p-8 rounded-[32px] border-none shadow-premium relative overflow-hidden group ${item.tabId !== 'overview' ? 'cursor-pointer' : 'cursor-default'}`}
                                             >
                                                 <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${item.color} opacity-5 blur-2xl -mr-8 -mt-8 group-hover:opacity-10 transition-opacity`} />
                                                 <div className="flex justify-between items-start mb-6">
@@ -321,18 +337,206 @@ const AdminPanel = () => {
                                                             </div>
                                                         </td>
                                                         <td className="py-8 px-10 text-right">
-                                                            <button
-                                                                onClick={() => handleDeleteUser(item._id)}
-                                                                className="h-10 w-10 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all ml-auto"
-                                                            >
-                                                                <Trash2 size={16} />
-                                                            </button>
+                                                            <div className="flex items-center justify-end gap-3">
+                                                                <button
+                                                                    onClick={() => setSelectedUser(item)}
+                                                                    className="h-10 w-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all"
+                                                                    title="View Details"
+                                                                >
+                                                                    <Eye size={16} />
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => handleDeleteUser(item._id)}
+                                                                    className="h-10 w-10 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"
+                                                                    title="Delete User"
+                                                                >
+                                                                    <Trash2 size={16} />
+                                                                </button>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 ))}
                                             </tbody>
                                         </table>
                                     </div>
+
+                                    {/* User Details Modal */}
+                                    <AnimatePresence>
+                                        {selectedUser && (
+                                            <motion.div
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                                                onClick={() => setSelectedUser(null)}
+                                            >
+                                                <motion.div
+                                                    initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                                                    animate={{ scale: 1, opacity: 1, y: 0 }}
+                                                    exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="w-full max-w-2xl max-h-[85vh] overflow-y-auto glass-card border border-white/10 rounded-[32px] p-8 shadow-2xl relative"
+                                                >
+                                                    <button
+                                                        onClick={() => setSelectedUser(null)}
+                                                        className="absolute top-6 right-6 h-8 w-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                                                    >
+                                                        ✕
+                                                    </button>
+
+                                                    <div className="flex items-center gap-6 mb-8 border-b border-white/10 pb-6">
+                                                        <div className="h-20 w-20 rounded-3xl bg-gradient-to-br from-primary/20 to-accent/20 border border-white/10 flex items-center justify-center font-black text-primary text-3xl">
+                                                            {selectedUser.name.charAt(0)}
+                                                        </div>
+                                                        <div>
+                                                            <h2 className="text-2xl font-black text-white">{selectedUser.name}</h2>
+                                                            <div className="flex items-center gap-3 mt-2">
+                                                                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${selectedUser.role === 'admin' ? 'bg-red-500/10 text-red-500 border-red-500/20' : selectedUser.role === 'employer' ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' : 'bg-green-500/10 text-green-500 border-green-500/20'}`}>
+                                                                    {selectedUser.role}
+                                                                </span>
+                                                                <span className="text-xs font-bold text-gray-400">{selectedUser.email}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="space-y-6">
+                                                        {/* Common Details */}
+                                                        <div>
+                                                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-3">Core Information</h3>
+                                                            <div className="grid grid-cols-2 gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
+                                                                <div>
+                                                                    <p className="text-[10px] text-gray-500 uppercase">Phone</p>
+                                                                    <p className="text-sm font-bold text-gray-200">{selectedUser.phone || 'Not Provided'}</p>
+                                                                </div>
+                                                                <div>
+                                                                    <p className="text-[10px] text-gray-500 uppercase">Joined</p>
+                                                                    <p className="text-sm font-bold text-gray-200">{new Date(selectedUser.createdAt).toLocaleDateString()}</p>
+                                                                </div>
+                                                                <div>
+                                                                    <p className="text-[10px] text-gray-500 uppercase">Mobile Verified</p>
+                                                                    <p className="text-sm font-bold text-gray-200">{selectedUser.mobileVerified ? 'Yes' : 'No'}</p>
+                                                                </div>
+                                                                {selectedUser.headline && (
+                                                                    <div className="col-span-2">
+                                                                        <p className="text-[10px] text-gray-500 uppercase">Headline</p>
+                                                                        <p className="text-sm font-bold text-gray-200">{selectedUser.headline}</p>
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Seeker Specific */}
+                                                        {selectedUser.role === 'seeker' && (
+                                                            <>
+                                                                <div>
+                                                                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-3">Professional Skills</h3>
+                                                                    <div className="flex flex-wrap gap-2">
+                                                                        {selectedUser.skills && selectedUser.skills.length > 0 ? (
+                                                                            selectedUser.skills.map((skill, idx) => (
+                                                                                <span key={idx} className="bg-white/10 px-3 py-1 rounded-lg text-xs font-bold text-gray-300">
+                                                                                    {skill}
+                                                                                </span>
+                                                                            ))
+                                                                        ) : (
+                                                                            <span className="text-xs text-gray-600 font-medium">No skills listed</span>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* Experience Section */}
+                                                                <div>
+                                                                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-3">Experience</h3>
+                                                                    <div className="space-y-4">
+                                                                        {selectedUser.experience && selectedUser.experience.length > 0 ? (
+                                                                            selectedUser.experience.map((exp, idx) => (
+                                                                                <div key={idx} className="bg-white/5 p-4 rounded-2xl border border-white/5 relative pl-6">
+                                                                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-transparent rounded-l-2xl" />
+                                                                                    <h4 className="text-sm font-black text-white">{exp.title}</h4>
+                                                                                    <p className="text-xs font-bold text-primary mb-2">{exp.company}</p>
+                                                                                    <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">
+                                                                                        <span>{new Date(exp.startDate).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>
+                                                                                        <span>-</span>
+                                                                                        <span>{exp.current ? 'Present' : new Date(exp.endDate).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>
+                                                                                    </div>
+                                                                                    {exp.description && <p className="text-xs font-medium text-gray-300 leading-relaxed">{exp.description}</p>}
+                                                                                </div>
+                                                                            ))
+                                                                        ) : (
+                                                                            <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
+                                                                                <span className="text-xs text-gray-600 font-medium">No experience listed</span>
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* Education Section */}
+                                                                <div>
+                                                                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-3">Education</h3>
+                                                                    <div className="space-y-4">
+                                                                        {selectedUser.education && selectedUser.education.length > 0 ? (
+                                                                            selectedUser.education.map((edu, idx) => (
+                                                                                <div key={idx} className="bg-white/5 p-4 rounded-2xl border border-white/5 relative pl-6">
+                                                                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-accent to-transparent rounded-l-2xl" />
+                                                                                    <h4 className="text-sm font-black text-white">{edu.institution}</h4>
+                                                                                    <p className="text-xs font-bold text-primary mb-2">{edu.degree} in {edu.fieldOfStudy}</p>
+                                                                                    <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                                                                                        <span>{new Date(edu.startDate).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>
+                                                                                        <span>-</span>
+                                                                                        <span>{edu.current ? 'Present' : new Date(edu.endDate).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            ))
+                                                                        ) : (
+                                                                            <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
+                                                                                <span className="text-xs text-gray-600 font-medium">No education listed</span>
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+
+                                                                {selectedUser.resume && (
+                                                                    <div>
+                                                                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-3">Documents</h3>
+                                                                        <a href={selectedUser.resume} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-xs font-bold text-blue-400 hover:text-blue-300 bg-blue-500/10 px-4 py-2 rounded-xl transition-colors">
+                                                                            <FileText size={14} /> View Resume
+                                                                        </a>
+                                                                    </div>
+                                                                )}
+                                                            </>
+                                                        )}
+
+                                                        {/* Employer Specific */}
+                                                        {selectedUser.role === 'employer' && (
+                                                            <div>
+                                                                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-3">Company Details</h3>
+                                                                <div className="grid grid-cols-1 gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
+                                                                    <div>
+                                                                        <p className="text-[10px] text-gray-500 uppercase">Company Name</p>
+                                                                        <p className="text-sm font-bold text-gray-200">{selectedUser.companyName || 'Not Provided'}</p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <p className="text-[10px] text-gray-500 uppercase">Website</p>
+                                                                        <p className="text-sm font-bold text-blue-400 break-all">{selectedUser.companyWebsite || 'Not Provided'}</p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <p className="text-[10px] text-gray-500 uppercase">Location</p>
+                                                                        <p className="text-sm font-bold text-gray-200">{selectedUser.companyLocation || 'Not Provided'}</p>
+                                                                    </div>
+                                                                    {selectedUser.companyBio && (
+                                                                        <div>
+                                                                            <p className="text-[10px] text-gray-500 uppercase">Bio</p>
+                                                                            <p className="text-sm font-medium text-gray-300 leading-relaxed mt-1">{selectedUser.companyBio}</p>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                        )}
+
+                                                    </div>
+                                                </motion.div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
                                 </motion.div>
                             )}
 

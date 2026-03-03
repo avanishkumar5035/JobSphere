@@ -49,7 +49,20 @@ const Home = () => {
                             transition={{ delay: 0.2, duration: 0.5 }}
                             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-black uppercase tracking-[0.2em] mb-8"
                         >
-                            <Zap className="h-3 w-3 fill-primary" /> The future of recruitment is here
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-1">
+                                <path d="M12 2L4 10H10V22L18 12H12L12 2Z" fill="url(#boltGrad1)" />
+                                <path d="M12 2L4 10H10L12 2Z" fill="#38BDF8" />
+                                <path d="M10 10V22L18 12H12L10 10Z" fill="#A855F7" />
+                                <path d="M12 2V12H18L12 2Z" fill="#FBBF24" />
+                                <defs>
+                                    <linearGradient id="boltGrad1" x1="4" y1="2" x2="18" y2="22" gradientUnits="userSpaceOnUse">
+                                        <stop stopColor="#38BDF8" />
+                                        <stop offset="0.5" stopColor="#FBBF24" />
+                                        <stop offset="1" stopColor="#A855F7" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            The future of recruitment is here
                         </motion.div>
                         <h1 className="text-6xl md:text-8xl font-black text-gray-900 dark:text-white tracking-tighter leading-tight mb-8">
                             Find your <span className="text-gradient">dream career</span> <br className="hidden md:block" /> with JobSphere.
@@ -72,6 +85,7 @@ const Home = () => {
                                 <div className="flex-1 text-left">
                                     <label className="block text-[10px] uppercase tracking-widest font-black text-gray-500 mb-0.5">What are you looking for?</label>
                                     <Input
+                                        id="job-search-input"
                                         placeholder="Skill, Designations, Companies"
                                         className="border-0 p-0 shadow-none focus-visible:ring-0 bg-transparent text-white placeholder-gray-600 h-auto text-lg font-semibold"
                                     />
@@ -85,13 +99,22 @@ const Home = () => {
                                 <div className="flex-1 text-left">
                                     <label className="block text-[10px] uppercase tracking-widest font-black text-gray-500 mb-0.5">Where?</label>
                                     <Input
+                                        id="job-location-input"
                                         placeholder="Enter location or 'Remote'"
                                         className="border-0 p-0 shadow-none focus-visible:ring-0 bg-transparent text-white placeholder-gray-600 h-auto text-lg font-semibold"
                                     />
                                 </div>
                             </div>
 
-                            <Button size="lg" className="w-full md:w-auto px-12 h-[72px] text-xl font-black rounded-[24px] shadow-xl shadow-primary/40 bg-primary hover:bg-primary-dark premium-button group" onClick={() => navigate('/jobs')}>
+                            <Button
+                                size="lg"
+                                className="w-full md:w-auto px-12 h-[72px] text-xl font-black rounded-[24px] shadow-xl shadow-primary/40 bg-primary hover:bg-primary-dark premium-button group"
+                                onClick={() => {
+                                    const keyword = document.getElementById('job-search-input')?.value || '';
+                                    const location = document.getElementById('job-location-input')?.value || '';
+                                    navigate('/jobs', { state: { keyword, location } });
+                                }}
+                            >
                                 Search Jobs
                                 <ChevronRight className="h-6 w-6 ml-2 group-hover:translate-x-1 transition-transform" />
                             </Button>
@@ -100,7 +123,11 @@ const Home = () => {
                         <div className="flex flex-wrap justify-center gap-4 text-sm">
                             <span className="text-gray-500 font-bold uppercase tracking-widest py-2">Trending:</span>
                             {['Remote', 'MNC', 'Software', 'Design', 'Marketing', 'Banking'].map((tag) => (
-                                <button key={tag} className="px-5 py-2 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:border-accent hover:text-white transition-all font-bold cursor-pointer">
+                                <button
+                                    key={tag}
+                                    onClick={() => navigate('/jobs', { state: { keyword: tag } })}
+                                    className="px-5 py-2 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:border-accent hover:text-white transition-all font-bold cursor-pointer"
+                                >
                                     {tag}
                                 </button>
                             ))}
@@ -204,7 +231,7 @@ const Home = () => {
                                 <TrendingUp className="h-12 w-12 text-primary mb-6" />
                                 <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-4">Salary Insights</h3>
                                 <p className="text-gray-500 dark:text-gray-400 mb-6 font-medium">Research market rates for your role and negotiate with confidence.</p>
-                                <Button className="w-full bg-primary hover:bg-primary-dark rounded-2xl h-14 font-black">Check Salaries</Button>
+                                <Button className="w-full bg-primary hover:bg-primary-dark rounded-2xl h-14 font-black" onClick={() => navigate('/jobs')}>Check Salaries</Button>
                             </motion.div>
 
                             <div className="bg-white dark:bg-gray-800 p-10 rounded-[40px] shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700">

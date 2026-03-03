@@ -38,12 +38,16 @@ const Register = () => {
         try {
             const res = await register(name, email, password, role, phone);
             if (res.success) {
-                navigate('/verify-mobile', { replace: true });
+                if (role === 'employer') {
+                    navigate('/dashboard/employer', { replace: true });
+                } else {
+                    navigate('/jobs', { replace: true });
+                }
             } else {
-                setError(res.message || 'Registration failed. Please try again.');
+                setError(res.message || 'Registration failed. The server might be unreachable.');
             }
         } catch (err) {
-            setError('Something went wrong. Please check your connection.');
+            setError('Unable to connect to the server. Please check your internet connection or try again later.');
         } finally {
             setIsLoading(false);
         }

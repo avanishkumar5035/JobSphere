@@ -92,11 +92,7 @@ const EmployerDashboard = () => {
                         <p className="text-gray-500 dark:text-gray-400 mt-4 text-xl font-medium">Manage your professional pipeline and track candidate performance.</p>
                     </div>
                     <div className="flex gap-4">
-                        <Link to="/post-job" className="w-full sm:w-auto">
-                            <Button size="lg" className="h-14 px-10 rounded-2xl font-black shadow-xl shadow-primary/20 premium-button gap-2">
-                                <Plus className="h-5 w-5" /> Post New Role
-                            </Button>
-                        </Link>
+                        {/* Post New Role button removed. Only Admins can post. */}
                     </div>
                 </motion.div>
 
@@ -303,12 +299,7 @@ const EmployerDashboard = () => {
                             </div>
                         </div>
                         <h3 className="text-gray-900 dark:text-white font-black text-2xl mb-3">Your portfolio is currently empty</h3>
-                        <p className="text-gray-500 dark:text-gray-400 mb-10 max-w-sm font-medium">Capture the best talent by posting your first job opening today. It takes less than 2 minutes.</p>
-                        <Link to="/post-job">
-                            <Button size="lg" className="rounded-2xl px-10 h-14 shadow-xl shadow-primary/30 gap-3 font-black text-lg">
-                                <Plus className="h-6 w-6" /> Create First Job Posting
-                            </Button>
-                        </Link>
+                        <p className="text-gray-500 dark:text-gray-400 mb-10 max-w-sm font-medium">Please contact an administrator to post your first job opening.</p>
                     </div>
                 )}
             </div>
