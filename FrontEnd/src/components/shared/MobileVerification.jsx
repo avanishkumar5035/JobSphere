@@ -67,8 +67,8 @@ const MobileVerification = () => {
     };
 
     return (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-4">
-            <div className="flex items-center gap-3 text-gray-900 border-b border-gray-100 pb-4">
+        <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+            <div className="flex items-center gap-3 text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-4">
                 <div className="p-2 bg-blue-50 text-accent rounded-full">
                     <Smartphone className="h-5 w-5" />
                 </div>
@@ -83,7 +83,7 @@ const MobileVerification = () => {
 
             {step === 'initial' && (
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-                    <p className="text-sm text-gray-700">
+                    <p className="text-sm text-gray-700 dark:text-gray-200">
                         Current Number: <span className="font-medium">{user?.phone || 'Not provided'}</span>
                     </p>
                     <Button onClick={handleSendOtp} disabled={!user?.phone}>
@@ -101,7 +101,7 @@ const MobileVerification = () => {
             {step === 'verify' && (
                 <form onSubmit={handleVerifyOtp} className="space-y-4 pt-2">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Enter 6-digit Code</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Enter 6-digit Code</label>
                         <Input
                             type="text"
                             maxLength="6"
@@ -129,7 +129,7 @@ const MobileVerification = () => {
                     <div className="mx-auto w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-3">
                         <CheckCircle className="h-6 w-6" />
                     </div>
-                    <h4 className="font-medium text-gray-900">Verification Successful</h4>
+                    <h4 className="font-medium text-gray-900 dark:text-white">Verification Successful</h4>
                     <p className="text-sm text-gray-500">Your mobile number is now verified.</p>
                 </div>
             )}

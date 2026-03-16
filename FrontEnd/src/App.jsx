@@ -32,12 +32,12 @@ function App() {
     <ThemeProvider>
       <Router>
         <AIChatbot />
-        <div className="min-h-screen flex flex-col relative overflow-hidden bg-background transition-colors duration-300 text-foreground">
+        <div className="min-h-screen flex flex-col relative overflow-hidden bg-gray-50 dark:bg-gray-950 transition-colors duration-300 text-gray-900 dark:text-gray-100">
           {/* Subtle Background Elements */}
           <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
             <StarryBackground />
             {/* Very subtle gradient to break solid white/gray */}
-            <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-primary/5 to-transparent dark:from-primary/20" />
+            <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-primary/5 to-transparent dark:from-primary/10" />
 
             {/* Clean Grid Pattern */}
             <div className="absolute inset-0 bg-grid-pattern opacity-[0.4] dark:opacity-[0.1]" style={{ backgroundPosition: 'center' }} />

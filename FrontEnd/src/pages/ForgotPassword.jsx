@@ -92,10 +92,10 @@ const ForgotPassword = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8">
             <div className="w-full max-w-md space-y-8">
                 <div className="text-center">
-                    <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">Reset Password</h2>
+                    <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Reset Password</h2>
                 </div>
 
                 <Card className="mt-8">
@@ -126,7 +126,7 @@ const ForgotPassword = () => {
                         {step === 1 && (
                             <form className="space-y-6" onSubmit={handleSendOTP}>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Email address</label>
                                     <Input
                                         type="email"
                                         required
@@ -146,7 +146,7 @@ const ForgotPassword = () => {
                         {step === 2 && (
                             <form className="space-y-6" onSubmit={handleVerifyOTP}>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">6-Digit OTP</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">6-Digit OTP</label>
                                     <Input
                                         type="text"
                                         required
@@ -176,7 +176,7 @@ const ForgotPassword = () => {
                         {step === 3 && (
                             <form className="space-y-6" onSubmit={handleResetPassword}>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">New Password</label>
                                     <div className="relative">
                                         <Input
                                             type={showPassword ? 'text' : 'password'}
@@ -198,7 +198,7 @@ const ForgotPassword = () => {
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Confirm New Password</label>
                                     <div className="relative">
                                         <Input
                                             type={showConfirmPassword ? 'text' : 'password'}

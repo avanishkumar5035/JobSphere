@@ -125,7 +125,7 @@ const AdminPanel = () => {
                             onClick={() => setActiveTab(tab.id)}
                             className={`w-full flex items-center space-x-4 px-6 py-4 rounded-[20px] transition-all duration-300 relative group ${activeTab === tab.id
                                 ? 'bg-primary/10 text-primary border border-primary/20'
-                                : 'text-gray-500 hover:text-white hover:bg-white/5'
+                                : 'text-gray-500 hover:text-white hover:bg-white dark:bg-gray-900/5'
                                 }`}
                         >
                             <span className={activeTab === tab.id ? 'text-primary' : 'text-gray-500 group-hover:text-white'}>{tab.icon}</span>
@@ -169,7 +169,7 @@ const AdminPanel = () => {
                                 </Button>
                             </Link>
                         )}
-                        <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-xl border border-white/5">
+                        <div className="flex items-center gap-3 bg-white dark:bg-gray-900/5 px-4 py-2 rounded-xl border border-white/5">
                             <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
                             <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">System Nominal</span>
                         </div>
@@ -217,7 +217,7 @@ const AdminPanel = () => {
                                             >
                                                 <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${item.color} opacity-5 blur-2xl -mr-8 -mt-8 group-hover:opacity-10 transition-opacity`} />
                                                 <div className="flex justify-between items-start mb-6">
-                                                    <div className="h-12 w-12 rounded-2xl bg-white/5 flex items-center justify-center text-gray-400 group-hover:text-white transition-colors">
+                                                    <div className="h-12 w-12 rounded-2xl bg-white dark:bg-gray-900/5 flex items-center justify-center text-gray-400 group-hover:text-white transition-colors">
                                                         {item.icon}
                                                     </div>
                                                     <span className="text-[10px] font-black text-green-500 bg-green-500/10 px-2 py-1 rounded-lg uppercase tracking-widest">{item.trend}</span>
@@ -249,7 +249,7 @@ const AdminPanel = () => {
                                                         transition={{ delay: i * 0.05, duration: 1, ease: "easeOut" }}
                                                         className="flex-1 bg-gradient-to-t from-primary/10 via-primary/40 to-primary rounded-t-lg group relative"
                                                     >
-                                                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-black text-[10px] font-black px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">{h}%</div>
+                                                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white dark:bg-gray-900 text-black text-[10px] font-black px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">{h}%</div>
                                                     </motion.div>
                                                 ))}
                                             </div>
@@ -281,7 +281,7 @@ const AdminPanel = () => {
                                                     </motion.div>
                                                 ))}
                                             </div>
-                                            <Button className="w-full mt-10 rounded-2xl h-14 bg-white/5 hover:bg-white/10 text-white font-black text-xs uppercase tracking-widest border border-white/5">View All Logs</Button>
+                                            <Button className="w-full mt-10 rounded-2xl h-14 bg-white dark:bg-gray-900/5 hover:bg-white dark:bg-gray-900/10 text-white font-black text-xs uppercase tracking-widest border border-white/5">View All Logs</Button>
                                         </div>
                                     </div>
                                 </motion.div>
@@ -297,7 +297,7 @@ const AdminPanel = () => {
                                     <div className="overflow-x-auto">
                                         <table className="w-full text-left">
                                             <thead>
-                                                <tr className="border-b border-white/5 bg-white/5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
+                                                <tr className="border-b border-white/5 bg-white dark:bg-gray-900/5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
                                                     <th className="py-8 px-10">Candidate Identity</th>
                                                     <th className="py-8 px-10">Classification</th>
                                                     <th className="py-8 px-10">Lifecycle Date</th>
@@ -307,7 +307,7 @@ const AdminPanel = () => {
                                             </thead>
                                             <tbody className="divide-y divide-white/5">
                                                 {users.map((item) => (
-                                                    <tr key={item._id} className="hover:bg-white/[0.02] transition-colors group">
+                                                    <tr key={item._id} className="hover:bg-white dark:bg-gray-900/[0.02] transition-colors group">
                                                         <td className="py-8 px-10">
                                                             <div className="flex items-center gap-5">
                                                                 <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 border border-white/10 flex items-center justify-center font-black text-primary">
@@ -379,7 +379,7 @@ const AdminPanel = () => {
                                                 >
                                                     <button
                                                         onClick={() => setSelectedUser(null)}
-                                                        className="absolute top-6 right-6 h-8 w-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                                                        className="absolute top-6 right-6 h-8 w-8 rounded-full bg-white dark:bg-gray-900/5 hover:bg-white dark:bg-gray-900/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
                                                     >
                                                         ✕
                                                     </button>
@@ -403,7 +403,7 @@ const AdminPanel = () => {
                                                         {/* Common Details */}
                                                         <div>
                                                             <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-3">Core Information</h3>
-                                                            <div className="grid grid-cols-2 gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
+                                                            <div className="grid grid-cols-2 gap-4 bg-white dark:bg-gray-900/5 p-4 rounded-2xl border border-white/5">
                                                                 <div>
                                                                     <p className="text-[10px] text-gray-500 uppercase">Phone</p>
                                                                     <p className="text-sm font-bold text-gray-200">{selectedUser.phone || 'Not Provided'}</p>
@@ -433,7 +433,7 @@ const AdminPanel = () => {
                                                                     <div className="flex flex-wrap gap-2">
                                                                         {selectedUser.skills && selectedUser.skills.length > 0 ? (
                                                                             selectedUser.skills.map((skill, idx) => (
-                                                                                <span key={idx} className="bg-white/10 px-3 py-1 rounded-lg text-xs font-bold text-gray-300">
+                                                                                <span key={idx} className="bg-white dark:bg-gray-900/10 px-3 py-1 rounded-lg text-xs font-bold text-gray-300">
                                                                                     {skill}
                                                                                 </span>
                                                                             ))
@@ -449,7 +449,7 @@ const AdminPanel = () => {
                                                                     <div className="space-y-4">
                                                                         {selectedUser.experience && selectedUser.experience.length > 0 ? (
                                                                             selectedUser.experience.map((exp, idx) => (
-                                                                                <div key={idx} className="bg-white/5 p-4 rounded-2xl border border-white/5 relative pl-6">
+                                                                                <div key={idx} className="bg-white dark:bg-gray-900/5 p-4 rounded-2xl border border-white/5 relative pl-6">
                                                                                     <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-transparent rounded-l-2xl" />
                                                                                     <h4 className="text-sm font-black text-white">{exp.title}</h4>
                                                                                     <p className="text-xs font-bold text-primary mb-2">{exp.company}</p>
@@ -462,7 +462,7 @@ const AdminPanel = () => {
                                                                                 </div>
                                                                             ))
                                                                         ) : (
-                                                                            <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
+                                                                            <div className="bg-white dark:bg-gray-900/5 p-4 rounded-2xl border border-white/5">
                                                                                 <span className="text-xs text-gray-600 font-medium">No experience listed</span>
                                                                             </div>
                                                                         )}
@@ -475,7 +475,7 @@ const AdminPanel = () => {
                                                                     <div className="space-y-4">
                                                                         {selectedUser.education && selectedUser.education.length > 0 ? (
                                                                             selectedUser.education.map((edu, idx) => (
-                                                                                <div key={idx} className="bg-white/5 p-4 rounded-2xl border border-white/5 relative pl-6">
+                                                                                <div key={idx} className="bg-white dark:bg-gray-900/5 p-4 rounded-2xl border border-white/5 relative pl-6">
                                                                                     <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-accent to-transparent rounded-l-2xl" />
                                                                                     <h4 className="text-sm font-black text-white">{edu.institution}</h4>
                                                                                     <p className="text-xs font-bold text-primary mb-2">{edu.degree} in {edu.fieldOfStudy}</p>
@@ -487,7 +487,7 @@ const AdminPanel = () => {
                                                                                 </div>
                                                                             ))
                                                                         ) : (
-                                                                            <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
+                                                                            <div className="bg-white dark:bg-gray-900/5 p-4 rounded-2xl border border-white/5">
                                                                                 <span className="text-xs text-gray-600 font-medium">No education listed</span>
                                                                             </div>
                                                                         )}
@@ -509,7 +509,7 @@ const AdminPanel = () => {
                                                         {selectedUser.role === 'employer' && (
                                                             <div>
                                                                 <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-3">Company Details</h3>
-                                                                <div className="grid grid-cols-1 gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
+                                                                <div className="grid grid-cols-1 gap-4 bg-white dark:bg-gray-900/5 p-4 rounded-2xl border border-white/5">
                                                                     <div>
                                                                         <p className="text-[10px] text-gray-500 uppercase">Company Name</p>
                                                                         <p className="text-sm font-bold text-gray-200">{selectedUser.companyName || 'Not Provided'}</p>
@@ -595,7 +595,7 @@ const AdminPanel = () => {
                                         <div className="overflow-x-auto">
                                             <table className="w-full text-left">
                                                 <thead>
-                                                    <tr className="border-b border-white/5 bg-white/5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
+                                                    <tr className="border-b border-white/5 bg-white dark:bg-gray-900/5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
                                                         <th className="py-8 px-10">Candidate</th>
                                                         <th className="py-8 px-10">Target Role</th>
                                                         <th className="py-8 px-10">Submission Date</th>
@@ -605,7 +605,7 @@ const AdminPanel = () => {
                                                 </thead>
                                                 <tbody className="divide-y divide-white/5">
                                                     {(applications || []).map((app) => (
-                                                        <tr key={app?._id} className="hover:bg-white/[0.02] transition-colors group">
+                                                        <tr key={app?._id} className="hover:bg-white dark:bg-gray-900/[0.02] transition-colors group">
                                                             <td className="py-8 px-10">
                                                                 <div>
                                                                     <div className="text-lg font-black text-white group-hover:text-primary transition-colors">{app?.applicant?.name || 'Unknown Candidate'}</div>
@@ -633,7 +633,7 @@ const AdminPanel = () => {
                                                                             alert('Failed to update status');
                                                                         }
                                                                     }}
-                                                                    className={`bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-[10px] font-black uppercase tracking-widest focus:outline-none focus:border-primary/50 transition-all ${app.status === 'rejected' ? 'text-red-500' :
+                                                                    className={`bg-white dark:bg-gray-900/5 border border-white/10 rounded-xl px-4 py-2 text-[10px] font-black uppercase tracking-widest focus:outline-none focus:border-primary/50 transition-all ${app.status === 'rejected' ? 'text-red-500' :
                                                                         app.status === 'hired' ? 'text-green-500' :
                                                                             app.status === 'shortlisted' ? 'text-purple-500' :
                                                                                 'text-blue-500'
@@ -685,7 +685,7 @@ const AdminPanel = () => {
                                                     <input
                                                         type={field.type}
                                                         defaultValue={field.value}
-                                                        className="w-full bg-white/5 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-primary/50 transition-all font-bold"
+                                                        className="w-full bg-white dark:bg-gray-900/5 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-primary/50 transition-all font-bold"
                                                     />
                                                 </div>
                                             ))}

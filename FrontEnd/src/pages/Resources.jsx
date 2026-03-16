@@ -253,7 +253,7 @@ const Resources = () => {
                                 </div>
                                 <h3 className="text-3xl font-black text-white mb-3 tracking-tighter leading-none">Cracking the FAANG Interview</h3>
                                 <p className="text-gray-400 text-sm font-medium leading-relaxed mb-8">Join David Chen (Ex-Engineering Director, Meta) for an exclusive deep dive.</p>
-                                <Button className="w-full bg-white text-black hover:bg-gray-100 rounded-2xl h-14 font-black text-[10px] uppercase tracking-widest transition-transform group-hover:scale-105 active:scale-95 duration-300">
+                                <Button className="w-full bg-white dark:bg-gray-900 text-black hover:bg-gray-100 rounded-2xl h-14 font-black text-[10px] uppercase tracking-widest transition-transform group-hover:scale-105 active:scale-95 duration-300">
                                     Reserve Strategy Seat
                                 </Button>
                             </div>
@@ -266,7 +266,7 @@ const Resources = () => {
                             </div>
                             <h3 className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter mb-2">The Ultimate Tech Career Toolkit</h3>
                             <p className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-8">15+ templates, checklists, and scripts to fast-track your job search.</p>
-                            <Button className="w-full bg-gray-900 dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-2xl h-14 font-black text-[10px] uppercase tracking-widest">
+                            <Button className="w-full bg-gray-900 dark:bg-white dark:bg-gray-900 text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-2xl h-14 font-black text-[10px] uppercase tracking-widest">
                                 Download Free Pack
                             </Button>
                         </div>

@@ -33,15 +33,19 @@
 }
 
 @layer base {
-  body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    @apply text-gray-900 antialiased transition-colors duration-300;
-    background-color: var(--color-gray-50);
+  :root {
+    --color-background-app: var(--color-gray-50);
+    --color-foreground-app: var(--color-gray-900);
   }
 
-  .dark body {
-    background-color: var(--color-gray-950);
-    color: #f8fafc;
+  .dark {
+    --color-background-app: var(--color-gray-950);
+    --color-foreground-app: var(--color-gray-100);
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    @apply antialiased transition-colors duration-300;
   }
 }
 

@@ -87,9 +87,9 @@ const PostJob = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto">
-                <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">Post a New Job</h1>
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Post a New Job</h1>
 
                 <Card>
                     <CardHeader>
@@ -99,12 +99,12 @@ const PostJob = () => {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Job Title</label>
                                     <Input name="title" value={title} onChange={onChange} placeholder="e.g. Senior Frontend Engineer" required />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Job Type</label>
-                                    <select name="type" value={type} onChange={onChange} className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Job Type</label>
+                                    <select name="type" value={type} onChange={onChange} className="flex h-10 w-full rounded-md border border-gray-300 bg-white dark:bg-gray-900 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
                                         <option>Full-time</option>
                                         <option>Part-time</option>
                                         <option>Contract</option>
@@ -115,33 +115,33 @@ const PostJob = () => {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Location</label>
                                     <Input name="location" value={location} onChange={onChange} placeholder="e.g. Remote, or City, Country" required />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Salary Range</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Salary Range</label>
                                     <Input name="salary" value={salary} onChange={onChange} placeholder="e.g. $100k - $130k" />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Company Logo</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Company Logo</label>
                                 <Input type="file" onChange={uploadFileHandler} accept="image/*" />
                                 {uploading && <p className="text-sm text-gray-500 mt-1">Uploading...</p>}
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Job Description</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Job Description</label>
                                 <textarea
                                     name="description" value={description} onChange={onChange}
-                                    className="flex min-h-[150px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                                    className="flex min-h-[150px] w-full rounded-md border border-gray-300 bg-white dark:bg-gray-900 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                                     placeholder="Describe the role, responsibilities, and requirements..."
                                     required
                                 ></textarea>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Requirements (comma separated)</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Requirements (comma separated)</label>
                                 <Input placeholder="React, TypeScript, Node.js..." />
                             </div>
 

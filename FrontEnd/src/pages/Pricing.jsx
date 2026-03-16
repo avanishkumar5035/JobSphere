@@ -113,7 +113,7 @@ const Pricing = () => {
                                 variant={plan.buttonVariant}
                                 className={`w-full rounded-[24px] h-16 font-black uppercase tracking-widest text-xs transition-all ${plan.highlight
                                         ? 'bg-primary hover:bg-primary-dark shadow-xl shadow-primary/20 premium-button'
-                                        : 'border-gray-200 dark:border-gray-700 hover:bg-white dark:hover:bg-gray-800'
+                                        : 'border-gray-200 dark:border-gray-700 hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-800'
                                     }`}
                             >
                                 {plan.buttonText}

@@ -98,13 +98,13 @@ const MobileVerificationPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-            <Card className="max-w-md w-full shadow-lg border-gray-200">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-800 flex items-center justify-center p-4">
+            <Card className="max-w-md w-full shadow-lg border-gray-200 dark:border-gray-700">
                 <CardHeader className="text-center pb-2">
                     <div className="mx-auto w-12 h-12 bg-blue-100 text-accent rounded-full flex items-center justify-center mb-4">
                         <Smartphone className="h-6 w-6" />
                     </div>
-                    <CardTitle className="text-2xl font-bold text-gray-900">Mobile Verification</CardTitle>
+                    <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">Mobile Verification</CardTitle>
                     <p className="text-sm text-gray-500 mt-2">
                         To keep your account secure, we need to verify your local mobile number.
                     </p>
@@ -127,7 +127,7 @@ const MobileVerificationPage = () => {
                         <div className="space-y-4">
                             {isEditingPhone ? (
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700">Mobile Number</label>
+                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-200">Mobile Number</label>
                                     <Input
                                         type="tel"
                                         placeholder="e.g. 9876543210"
@@ -138,9 +138,9 @@ const MobileVerificationPage = () => {
                                     <p className="text-xs text-gray-500">Enter your 10-digit mobile number</p>
                                 </div>
                             ) : (
-                                <div className="p-4 bg-gray-50 rounded-lg border border-gray-100">
+                                <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-800">
                                     <p className="text-sm text-gray-500 text-center">We will send a code to:</p>
-                                    <p className="text-lg font-semibold text-gray-900 text-center mt-1">{phoneNumber}</p>
+                                    <p className="text-lg font-semibold text-gray-900 dark:text-white text-center mt-1">{phoneNumber}</p>
                                     <button
                                         onClick={() => setIsEditingPhone(true)}
                                         className="text-xs text-accent hover:underline block mx-auto mt-2"
@@ -170,7 +170,7 @@ const MobileVerificationPage = () => {
                     {step === 'verify' && (
                         <form onSubmit={handleVerifyOtp} className="space-y-4">
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-700">Enter 6-digit OTP Code</label>
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-200">Enter 6-digit OTP Code</label>
                                 <Input
                                     type="text"
                                     maxLength="6"
@@ -207,12 +207,12 @@ const MobileVerificationPage = () => {
                             <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center animate-bounce">
                                 <CheckCircle className="h-10 w-10" />
                             </div>
-                            <h3 className="text-xl font-bold text-gray-900">Success!</h3>
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white">Success!</h3>
                             <p className="text-gray-500">Your phone number is verified. Redirecting you now...</p>
                         </div>
                     )}
 
-                    <div className="pt-4 border-t border-gray-100">
+                    <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
                         <button
                             onClick={handleLogout}
                             className="flex items-center justify-center gap-2 w-full py-2 text-sm text-gray-500 hover:text-red-600 transition-colors"

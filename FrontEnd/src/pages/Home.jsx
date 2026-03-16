@@ -80,7 +80,7 @@ const Home = () => {
                     >
                         {/* Smart Search Bar */}
                         <div className="glass-card p-2 rounded-[32px] max-w-5xl mx-auto mb-12 shadow-2xl flex flex-col md:flex-row items-center gap-2 group transition-all duration-500 hover:shadow-primary/20">
-                            <div className="flex-1 w-full flex items-center px-6 py-4 bg-white/5 dark:bg-black/20 rounded-[24px] focus-within:bg-white/10 transition-colors">
+                            <div className="flex-1 w-full flex items-center px-6 py-4 bg-white dark:bg-gray-900/5 dark:bg-black/20 rounded-[24px] focus-within:bg-white dark:bg-gray-900/10 transition-colors">
                                 <Search className="h-6 w-6 text-accent mr-4" />
                                 <div className="flex-1 text-left">
                                     <label className="block text-[10px] uppercase tracking-widest font-black text-gray-500 mb-0.5">What are you looking for?</label>
@@ -92,9 +92,9 @@ const Home = () => {
                                 </div>
                             </div>
 
-                            <div className="hidden md:block w-px h-12 bg-white/10" />
+                            <div className="hidden md:block w-px h-12 bg-white dark:bg-gray-900/10" />
 
-                            <div className="flex-1 w-full flex items-center px-6 py-4 bg-white/5 dark:bg-black/20 rounded-[24px] focus-within:bg-white/10 transition-colors">
+                            <div className="flex-1 w-full flex items-center px-6 py-4 bg-white dark:bg-gray-900/5 dark:bg-black/20 rounded-[24px] focus-within:bg-white dark:bg-gray-900/10 transition-colors">
                                 <MapPin className="h-6 w-6 text-accent mr-4" />
                                 <div className="flex-1 text-left">
                                     <label className="block text-[10px] uppercase tracking-widest font-black text-gray-500 mb-0.5">Where?</label>
@@ -126,7 +126,7 @@ const Home = () => {
                                 <button
                                     key={tag}
                                     onClick={() => navigate('/jobs', { state: { keyword: tag } })}
-                                    className="px-5 py-2 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:border-accent hover:text-white transition-all font-bold cursor-pointer"
+                                    className="px-5 py-2 rounded-full bg-white dark:bg-gray-900/5 border border-white/10 text-gray-300 hover:bg-white dark:bg-gray-900/10 hover:border-accent hover:text-white transition-all font-bold cursor-pointer"
                                 >
                                     {tag}
                                 </button>
@@ -274,7 +274,7 @@ const Home = () => {
                             latestJobs.map((job) => (
                                 <div key={job._id} className="group bg-gray-50 dark:bg-gray-900/40 rounded-[40px] p-10 border border-gray-100 dark:border-gray-800 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 relative overflow-hidden">
                                     <div className="absolute top-0 right-0 p-8">
-                                        <Badge variant="outline" className="text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border-gray-200 text-gray-400 bg-white dark:bg-gray-800">
+                                        <Badge variant="outline" className="text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border-gray-200 dark:border-gray-700 text-gray-400 bg-white dark:bg-gray-800">
                                             {job.type}
                                         </Badge>
                                     </div>
@@ -319,14 +319,14 @@ const Home = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-40 bg-[#0f172a] relative overflow-hidden">
+            <section className="py-40 bg-white dark:bg-[#0f172a] relative overflow-hidden transition-colors duration-300">
                 <div className="absolute inset-0 z-0">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.15)_0%,transparent_70%)]" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.05)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.15)_0%,transparent_70%)]" />
                 </div>
                 <div className="max-w-5xl mx-auto px-4 text-center relative z-10">
-                    <Badge className="mb-8 bg-blue-500/10 text-blue-400 border-blue-500/20 px-4 py-1 font-black uppercase tracking-widest">Join the Future of Work</Badge>
-                    <h2 className="text-5xl md:text-6xl font-black text-white mb-10 tracking-tight leading-tight">Ready to Elevate Your Professional Career?</h2>
-                    <p className="text-xl text-gray-400 mb-16 max-w-2xl mx-auto font-medium leading-relaxed">
+                    <Badge className="mb-8 bg-blue-100 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-500/20 px-4 py-1 font-black uppercase tracking-widest">Join the Future of Work</Badge>
+                    <h2 className="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-10 tracking-tight leading-tight">Ready to Elevate Your Professional Career?</h2>
+                    <p className="text-xl text-gray-500 dark:text-gray-400 mb-16 max-w-2xl mx-auto font-medium leading-relaxed">
                         Join 2 million+ professionals who have already found their dream roles at JobSphere.
                         Your next big opportunity is just a click away.
                     </p>
@@ -334,7 +334,7 @@ const Home = () => {
                         <Button size="lg" className="bg-primary hover:bg-primary-dark text-white font-black text-xl px-12 h-20 rounded-[28px] shadow-2xl shadow-primary/30 premium-button" onClick={() => navigate('/register')}>
                             Get Started Free
                         </Button>
-                        <Button size="lg" variant="outline" className="text-white border-white/20 hover:bg-white/5 font-black text-xl px-12 h-20 rounded-[28px] backdrop-blur-sm transition-all" onClick={() => navigate('/login')}>
+                        <Button size="lg" variant="outline" className="text-gray-900 dark:text-white border-gray-200 dark:border-white/20 hover:bg-gray-50 dark:hover:bg-white/5 font-black text-xl px-12 h-20 rounded-[28px] backdrop-blur-sm transition-all" onClick={() => navigate('/login')}>
                             Post Hiring Need
                         </Button>
                     </div>

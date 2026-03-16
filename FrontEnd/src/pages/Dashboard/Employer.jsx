@@ -153,11 +153,11 @@ const EmployerDashboard = () => {
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
-                                        <div className="bg-white/50 dark:bg-black/20 p-6 rounded-3xl border border-white/50 dark:border-white/5">
+                                        <div className="bg-white dark:bg-gray-900/50 dark:bg-black/20 p-6 rounded-3xl border border-white/50 dark:border-white/5">
                                             <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Total Applicants</p>
                                             <p className="text-2xl font-black text-gray-900 dark:text-white">{allApplications.length}</p>
                                         </div>
-                                        <div className="bg-white/50 dark:bg-black/20 p-6 rounded-3xl border border-white/50 dark:border-white/5">
+                                        <div className="bg-white dark:bg-gray-900/50 dark:bg-black/20 p-6 rounded-3xl border border-white/50 dark:border-white/5">
                                             <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Time to Hire</p>
                                             <p className="text-2xl font-black text-gray-900 dark:text-white">18d</p>
                                         </div>
@@ -185,7 +185,7 @@ const EmployerDashboard = () => {
                                 <div className="space-y-6">
                                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Top Talent Pool</p>
                                     {[1, 2, 3].map((_, i) => (
-                                        <div key={i} className="flex items-center gap-4 group cursor-pointer p-2 -m-2 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                                        <div key={i} className="flex items-center gap-4 group cursor-pointer p-2 -m-2 rounded-2xl hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-800/50 transition-colors">
                                             <div className="h-12 w-12 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center shrink-0">
                                                 <Users className="h-6 w-6 text-gray-400" />
                                             </div>
@@ -235,7 +235,7 @@ const EmployerDashboard = () => {
                 ) : postedJobs.length > 0 ? (
                     <div className="divide-y divide-gray-50 dark:divide-gray-800">
                         {postedJobs.map((job) => (
-                            <div key={job._id} className="px-10 py-12 flex flex-col lg:flex-row lg:items-center justify-between hover:bg-gray-50/50 dark:hover:bg-gray-700/20 transition-all duration-500 gap-10 group relative overflow-hidden">
+                            <div key={job._id} className="px-10 py-12 flex flex-col lg:flex-row lg:items-center justify-between hover:bg-gray-50 dark:bg-gray-800/50 dark:hover:bg-gray-700/20 transition-all duration-500 gap-10 group relative overflow-hidden">
                                 <div className="absolute top-0 left-0 w-1 h-full bg-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-500" />
                                 <div className="flex-grow max-w-2xl">
                                     <div className="flex items-start gap-6">
@@ -282,7 +282,7 @@ const EmployerDashboard = () => {
                                         >
                                             Manage Pipeline
                                         </Button>
-                                        <Button variant="ghost" className="rounded-[20px] w-14 h-14 p-0 text-gray-400 border border-gray-100 dark:border-gray-800 flex items-center justify-center hover:bg-white dark:hover:bg-gray-700 shadow-sm transition-all group/edit">
+                                        <Button variant="ghost" className="rounded-[20px] w-14 h-14 p-0 text-gray-400 border border-gray-100 dark:border-gray-800 flex items-center justify-center hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-700 shadow-sm transition-all group/edit">
                                             <ExternalLink className="h-5 w-5 group-hover:scale-110 transition-transform" />
                                         </Button>
                                     </div>

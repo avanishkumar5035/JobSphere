@@ -180,11 +180,11 @@ const CandidateProfile = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50/50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-800/50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto space-y-8">
 
                 {/* Header & Completeness */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 flex flex-col md:flex-row gap-8 items-center md:items-start">
+                <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-8 flex flex-col md:flex-row gap-8 items-center md:items-start">
                     <div className="h-32 w-32 rounded-2xl bg-primary/5 flex items-center justify-center border-2 border-primary/10 overflow-hidden shrink-0">
                         {user?.photo ? (
                             <img src={user.photo} alt={user.name} className="h-full w-full object-cover" />
@@ -195,7 +195,7 @@ const CandidateProfile = () => {
 
                     <div className="flex-grow text-center md:text-left space-y-4">
                         <div>
-                            <h1 className="text-3xl font-bold text-gray-900 tracking-tight">{user?.name}</h1>
+                            <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{user?.name}</h1>
                             <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-2 text-gray-500">
                                 <span className="flex items-center gap-1.5 font-medium text-sm sm:text-base"><Mail className="h-4 w-4" /> {user?.email}</span>
                                 <span className="flex items-center gap-1.5 font-medium text-sm sm:text-base">
@@ -219,7 +219,7 @@ const CandidateProfile = () => {
                                     value={headline}
                                     onChange={(e) => setHeadline(e.target.value)}
                                     placeholder="e.g. Senior Full Stack Developer | React & Node.js"
-                                    className="bg-gray-50/50 focus:bg-white transition-all shadow-none border-gray-200"
+                                    className="bg-gray-50/50 focus:bg-white dark:bg-gray-900 transition-all shadow-none border-gray-200 dark:border-gray-700"
                                 />
                                 <Button size="sm" onClick={handleSaveBasic} disabled={loading} className="shrink-0 bg-primary hover:bg-primary/90">
                                     {loading ? <Clock className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
@@ -228,7 +228,7 @@ const CandidateProfile = () => {
                         </div>
                     </div>
 
-                    <div className="shrink-0 w-full md:w-48 space-y-3 bg-gray-50 rounded-2xl p-5 border border-gray-100 shadow-inner">
+                    <div className="shrink-0 w-full md:w-48 space-y-3 bg-gray-50 dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-800 shadow-inner">
                         <div className="flex justify-between items-end">
                             <span className="text-sm font-bold text-gray-600">Completeness</span>
                             <span className="text-2xl font-black text-primary transition-all">{completeness}%</span>
@@ -257,8 +257,8 @@ const CandidateProfile = () => {
                     <div className="space-y-8">
                         {/* Resume Card */}
                         <Card className="border-none shadow-sm overflow-hidden rounded-2xl">
-                            <CardHeader className="bg-gray-50/50 border-b border-gray-100 pb-4">
-                                <CardTitle className="text-lg flex items-center gap-2 text-gray-800 font-bold">
+                            <CardHeader className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800 pb-4">
+                                <CardTitle className="text-lg flex items-center gap-2 text-gray-800 dark:text-gray-100 font-bold">
                                     <FileText className="h-5 w-5 text-primary" /> Resume
                                 </CardTitle>
                             </CardHeader>
@@ -271,10 +271,10 @@ const CandidateProfile = () => {
                                         className="p-4 bg-blue-50/50 rounded-xl border-2 border-blue-100 flex items-center justify-between group hover:border-blue-300 transition-all cursor-pointer block"
                                     >
                                         <div className="flex items-center gap-4 overflow-hidden">
-                                            <div className="bg-white p-2.5 rounded-lg border border-blue-200 shadow-sm transition-transform group-hover:scale-110">
+                                            <div className="bg-white dark:bg-gray-900 p-2.5 rounded-lg border border-blue-200 shadow-sm transition-transform group-hover:scale-110">
                                                 <FileText className="h-6 w-6 text-blue-600" />
                                             </div>
-                                            <div className="truncate text-sm font-bold text-gray-700" title={user.resume.split('/').pop()}>
+                                            <div className="truncate text-sm font-bold text-gray-700 dark:text-gray-200" title={user.resume.split('/').pop()}>
                                                 {user.resume.split('/').pop()}
                                             </div>
                                         </div>
@@ -283,7 +283,7 @@ const CandidateProfile = () => {
                                         </div>
                                     </a>
                                 ) : (
-                                    <div className="text-center py-8 border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50/30">
+                                    <div className="text-center py-8 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl bg-gray-50 dark:bg-gray-800/30">
                                         <Upload className="h-8 w-8 text-gray-300 mx-auto mb-2" />
                                         <p className="text-xs text-gray-400 font-bold tracking-tight uppercase">No resume uploaded</p>
                                     </div>
@@ -299,8 +299,8 @@ const CandidateProfile = () => {
 
                         {/* Skills Card */}
                         <Card className="border-none shadow-sm overflow-hidden rounded-2xl">
-                            <CardHeader className="bg-gray-50/50 border-b border-gray-100 pb-4">
-                                <CardTitle className="text-lg flex items-center gap-2 text-gray-800 font-bold">
+                            <CardHeader className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800 pb-4">
+                                <CardTitle className="text-lg flex items-center gap-2 text-gray-800 dark:text-gray-100 font-bold">
                                     <CheckCircle2 className="h-5 w-5 text-primary" /> Skills
                                 </CardTitle>
                             </CardHeader>
@@ -311,13 +311,13 @@ const CandidateProfile = () => {
                                         value={newSkill}
                                         onChange={(e) => setNewSkill(e.target.value)}
                                         onKeyPress={(e) => e.key === 'Enter' && addSkill()}
-                                        className="h-11 bg-gray-50/50 border-gray-200 focus:bg-white rounded-xl shadow-none"
+                                        className="h-11 bg-gray-50/50 border-gray-200 dark:border-gray-700 focus:bg-white dark:bg-gray-900 rounded-xl shadow-none"
                                     />
                                     <Button size="sm" onClick={addSkill} className="h-11 px-4 rounded-xl shadow-md active:translate-y-0.5 transition-all"><Plus className="h-5 w-5" /></Button>
                                 </div>
                                 <div className="flex flex-wrap gap-2.5">
                                     {skills.map((skill, i) => (
-                                        <Badge key={i} variant="secondary" className="pl-4 pr-2 py-2 flex items-center gap-2 font-bold bg-white border-2 border-gray-100 hover:border-primary/20 hover:bg-primary/5 transition-all group rounded-lg">
+                                        <Badge key={i} variant="secondary" className="pl-4 pr-2 py-2 flex items-center gap-2 font-bold bg-white dark:bg-gray-900 border-2 border-gray-100 dark:border-gray-800 hover:border-primary/20 hover:bg-primary/5 transition-all group rounded-lg">
                                             {skill}
                                             <button onClick={() => removeSkill(skill)} className="p-0.5 hover:bg-red-50 rounded-full text-gray-400 hover:text-red-500 transition-colors">
                                                 <X className="h-4 w-4" />
@@ -335,8 +335,8 @@ const CandidateProfile = () => {
 
                         {/* Experience */}
                         <Card className="border-none shadow-sm overflow-hidden rounded-2xl">
-                            <CardHeader className="bg-gray-50/50 border-b border-gray-100 flex flex-row items-center justify-between py-5 px-8">
-                                <CardTitle className="text-xl flex items-center gap-2 text-gray-800 font-bold">
+                            <CardHeader className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800 flex flex-row items-center justify-between py-5 px-8">
+                                <CardTitle className="text-xl flex items-center gap-2 text-gray-800 dark:text-gray-100 font-bold">
                                     <Briefcase className="h-6 w-6 text-primary" /> Work Experience
                                 </CardTitle>
                                 <Button
@@ -355,17 +355,17 @@ const CandidateProfile = () => {
                             <CardContent className="p-8 space-y-8">
                                 {experience.length > 0 ? experience.map((exp, i) => (
                                     <div key={i} className="flex gap-6 group relative">
-                                        <div className="h-14 w-14 rounded-2xl bg-gray-50 flex items-center justify-center shrink-0 border-2 border-gray-100 mb-auto shadow-sm">
+                                        <div className="h-14 w-14 rounded-2xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center shrink-0 border-2 border-gray-100 dark:border-gray-800 mb-auto shadow-sm">
                                             <Briefcase className="h-7 w-7 text-gray-400" />
                                         </div>
-                                        <div className="flex-grow space-y-3 pb-8 border-b border-gray-100 last:border-0 last:pb-0">
+                                        <div className="flex-grow space-y-3 pb-8 border-b border-gray-100 dark:border-gray-800 last:border-0 last:pb-0">
                                             <div className="flex justify-between items-start">
                                                 <div>
-                                                    <h4 className="font-extrabold text-gray-900 text-xl tracking-tight">{exp.title}</h4>
-                                                    <p className="text-lg text-gray-700 font-bold mt-0.5">{exp.company}</p>
+                                                    <h4 className="font-extrabold text-gray-900 dark:text-white text-xl tracking-tight">{exp.title}</h4>
+                                                    <p className="text-lg text-gray-700 dark:text-gray-200 font-bold mt-0.5">{exp.company}</p>
                                                 </div>
                                                 <div className="opacity-0 group-hover:opacity-100 transition-all flex gap-1.5 translate-x-3 group-hover:translate-x-0">
-                                                    <Button variant="ghost" size="sm" className="h-9 w-9 p-0 hover:bg-gray-100 rounded-lg text-gray-600" onClick={() => openEditExp(i)}>
+                                                    <Button variant="ghost" size="sm" className="h-9 w-9 p-0 hover:bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-600" onClick={() => openEditExp(i)}>
                                                         <Edit2 className="h-4.5 w-4.5" />
                                                     </Button>
                                                     <Button variant="ghost" size="sm" className="h-9 w-9 p-0 text-red-400 hover:bg-red-50 rounded-lg" onClick={() => removeExp(i)}>
@@ -378,7 +378,7 @@ const CandidateProfile = () => {
                                         </div>
                                     </div>
                                 )) : (
-                                    <div className="text-center py-12 bg-gray-50/30 rounded-3xl border-2 border-dashed border-gray-100">
+                                    <div className="text-center py-12 bg-gray-50 dark:bg-gray-800/30 rounded-3xl border-2 border-dashed border-gray-100 dark:border-gray-800">
                                         <Briefcase className="h-12 w-12 text-gray-300 mx-auto mb-4" />
                                         <p className="text-gray-500 font-bold text-lg">Work history is currently empty</p>
                                         <Button variant="outline" size="sm" className="mt-5 font-bold rounded-xl border-2 px-8 h-11" onClick={() => setIsExpModalOpen(true)}>Add Experience</Button>
@@ -389,8 +389,8 @@ const CandidateProfile = () => {
 
                         {/* Education */}
                         <Card className="border-none shadow-sm overflow-hidden rounded-2xl">
-                            <CardHeader className="bg-gray-50/50 border-b border-gray-100 flex flex-row items-center justify-between py-5 px-8">
-                                <CardTitle className="text-xl flex items-center gap-2 text-gray-800 font-bold">
+                            <CardHeader className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800 flex flex-row items-center justify-between py-5 px-8">
+                                <CardTitle className="text-xl flex items-center gap-2 text-gray-800 dark:text-gray-100 font-bold">
                                     <GraduationCap className="h-6 w-6 text-primary" /> Education
                                 </CardTitle>
                                 <Button
@@ -409,17 +409,17 @@ const CandidateProfile = () => {
                             <CardContent className="p-8 space-y-8">
                                 {education.length > 0 ? education.map((edu, i) => (
                                     <div key={i} className="flex gap-6 group relative">
-                                        <div className="h-14 w-14 rounded-2xl bg-gray-50 flex items-center justify-center shrink-0 border-2 border-gray-100 mb-auto shadow-sm">
+                                        <div className="h-14 w-14 rounded-2xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center shrink-0 border-2 border-gray-100 dark:border-gray-800 mb-auto shadow-sm">
                                             <GraduationCap className="h-7 w-7 text-gray-400" />
                                         </div>
-                                        <div className="flex-grow space-y-3 pb-8 border-b border-gray-100 last:border-0 last:pb-0">
+                                        <div className="flex-grow space-y-3 pb-8 border-b border-gray-100 dark:border-gray-800 last:border-0 last:pb-0">
                                             <div className="flex justify-between items-start">
                                                 <div>
-                                                    <h4 className="font-extrabold text-gray-900 text-xl tracking-tight">{edu.degree} in {edu.fieldOfStudy}</h4>
-                                                    <p className="text-lg text-gray-700 font-bold mt-0.5">{edu.institution}</p>
+                                                    <h4 className="font-extrabold text-gray-900 dark:text-white text-xl tracking-tight">{edu.degree} in {edu.fieldOfStudy}</h4>
+                                                    <p className="text-lg text-gray-700 dark:text-gray-200 font-bold mt-0.5">{edu.institution}</p>
                                                 </div>
                                                 <div className="opacity-0 group-hover:opacity-100 transition-all flex gap-1.5 translate-x-3 group-hover:translate-x-0">
-                                                    <Button variant="ghost" size="sm" className="h-9 w-9 p-0 hover:bg-gray-100 rounded-lg text-gray-600" onClick={() => openEditEdu(i)}>
+                                                    <Button variant="ghost" size="sm" className="h-9 w-9 p-0 hover:bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-600" onClick={() => openEditEdu(i)}>
                                                         <Edit2 className="h-4.5 w-4.5" />
                                                     </Button>
                                                     <Button variant="ghost" size="sm" className="h-9 w-9 p-0 text-red-400 hover:bg-red-50 rounded-lg" onClick={() => removeEdu(i)}>
@@ -431,7 +431,7 @@ const CandidateProfile = () => {
                                         </div>
                                     </div>
                                 )) : (
-                                    <div className="text-center py-12 bg-gray-50/30 rounded-3xl border-2 border-dashed border-gray-100">
+                                    <div className="text-center py-12 bg-gray-50 dark:bg-gray-800/30 rounded-3xl border-2 border-dashed border-gray-100 dark:border-gray-800">
                                         <GraduationCap className="h-12 w-12 text-gray-300 mx-auto mb-4" />
                                         <p className="text-gray-500 font-bold text-lg">Academic background is empty</p>
                                         <Button variant="outline" size="sm" className="mt-5 font-bold rounded-xl border-2 px-8 h-11" onClick={() => setIsEduModalOpen(true)}>Add Education</Button>

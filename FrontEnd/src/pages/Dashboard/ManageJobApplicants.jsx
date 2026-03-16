@@ -120,7 +120,7 @@ const ManageJobApplicants = () => {
                                                             <Download className="h-4 w-4 mr-2" /> Resume
                                                         </Button>
                                                     </a>
-                                                    <Button variant="outline" size="sm" className="rounded-xl border-gray-200">
+                                                    <Button variant="outline" size="sm" className="rounded-xl border-gray-200 dark:border-gray-700">
                                                         <FileText className="h-4 w-4 mr-2" /> Profile
                                                     </Button>
                                                 </div>

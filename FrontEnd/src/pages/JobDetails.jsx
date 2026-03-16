@@ -296,7 +296,7 @@ const JobDetails = () => {
                         <div className="bg-primary rounded-xl shadow-sm p-6 text-white text-center">
                             <h3 className="font-bold text-xl mb-2">Better with the app</h3>
                             <p className="text-blue-100 text-sm mb-4">Get notified about new jobs in real-time.</p>
-                            <Button variant="outline" className="w-full border-white text-white hover:bg-white hover:text-primary">Download App</Button>
+                            <Button variant="outline" className="w-full border-white text-white hover:bg-white dark:bg-gray-900 hover:text-primary">Download App</Button>
                         </div>
                     </div>
                 </div>

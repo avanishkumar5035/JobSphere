@@ -78,7 +78,7 @@ const Companies = () => {
                                             )}
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                                             <div className="absolute top-6 right-6">
-                                                <div className="bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full">
+                                                <div className="bg-white dark:bg-gray-900/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full">
                                                     <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Active</span>
                                                 </div>
                                             </div>

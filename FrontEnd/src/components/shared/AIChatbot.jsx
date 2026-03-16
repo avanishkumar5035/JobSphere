@@ -55,7 +55,7 @@ const AIChatbot = () => {
                         {/* Header */}
                         <div className="bg-gradient-to-r from-primary to-accent p-4 flex items-center justify-between shadow-md relative z-10">
                             <div className="flex items-center gap-3">
-                                <div className="h-10 w-10 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30 text-white shadow-inner">
+                                <div className="h-10 w-10 bg-white dark:bg-gray-900/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30 text-white shadow-inner">
                                     <Bot className="h-6 w-6" />
                                 </div>
                                 <div>
@@ -67,7 +67,7 @@ const AIChatbot = () => {
                             </div>
                             <button
                                 onClick={() => setIsOpen(false)}
-                                className="h-8 w-8 bg-white/10 hover:bg-white/20 rounded-xl flex items-center justify-center text-white transition-colors"
+                                className="h-8 w-8 bg-white dark:bg-gray-900/10 hover:bg-white dark:bg-gray-900/20 rounded-xl flex items-center justify-center text-white transition-colors"
                             >
                                 <X className="h-5 w-5" />
                             </button>
