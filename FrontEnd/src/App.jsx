@@ -21,8 +21,9 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import Companies from './pages/Companies';
 import CompanyDetails from './pages/CompanyDetails';
 import Pricing from './pages/Pricing';
+import Payment from './pages/Payment';
 import Resources from './pages/Resources';
-
+import ResumeBuilder from './pages/ResumeBuilder';
 import { ThemeProvider } from './context/ThemeContext';
 import StarryBackground from './components/shared/StarryBackground';
 import AIChatbot from './components/shared/AIChatbot';
@@ -66,10 +67,12 @@ function App() {
                 <Route path="/companies" element={<Companies />} />
                 <Route path="/companies/:id" element={<CompanyDetails />} />
                 <Route path="/resources" element={<Resources />} />
+                <Route path="/resume-builder" element={<ResumeBuilder />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/premium" element={<Pricing />} />
+                <Route path="/payment" element={<Payment />} />
                 <Route path="/admin/login" element={<AdminLogin />} />
 
                 {/* Protected User Routes */}

@@ -44,6 +44,7 @@ const Navbar = () => {
                                 { name: 'Find Jobs', path: '/jobs' },
                                 { name: 'Companies', path: '/companies' },
                                 { name: 'Resources', path: '/resources' },
+                                { name: 'Resume Builder', path: '/resume-builder' },
                                 { name: 'Premium', path: '/premium' },
                             ].map((item) => (
                                 <Link
@@ -58,13 +59,6 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className="hidden md:flex items-center gap-6">
-                        <button
-                            onClick={toggleTheme}
-                            className="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-all transform hover:scale-110"
-                        >
-                            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-                        </button>
-
                         {user ? (
                             <div className="flex items-center gap-6">
                                 <Link to={user.role === 'admin' ? '/admin' : (user.role === 'employer' ? '/dashboard/employer' : '/dashboard')} className="flex items-center gap-3 group">
@@ -97,20 +91,27 @@ const Navbar = () => {
                                 <div className="h-8 w-px bg-gray-200 dark:bg-gray-800 mx-2"></div>
                             </div>
                         )}
-                    </div>
 
-                    <div className="-mr-2 flex items-center md:hidden gap-3">
                         <button
                             onClick={toggleTheme}
-                            className="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300"
+                            className="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-all transform hover:scale-110"
                         >
                             {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                         </button>
+                    </div>
+
+                    <div className="-mr-2 flex items-center md:hidden gap-3">
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             className="p-2 rounded-xl bg-primary text-white shadow-lg shadow-primary/20"
                         >
                             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                        </button>
+                        <button
+                            onClick={toggleTheme}
+                            className="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300"
+                        >
+                            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                         </button>
                     </div>
                 </div>
@@ -120,7 +121,7 @@ const Navbar = () => {
             {isMenuOpen && (
                 <div className="md:hidden glass-card mx-4 mt-2 rounded-[24px] border border-gray-100 dark:border-gray-800 overflow-hidden animate-fade-in">
                     <div className="p-4 space-y-2">
-                        {['Find Jobs', 'Companies', 'Resources', 'Premium'].map((item) => (
+                        {['Find Jobs', 'Companies', 'Resources', 'Resume Builder', 'Premium'].map((item) => (
                             <Link
                                 key={item}
                                 to={`/${item.toLowerCase().replace(' ', '-')}`}

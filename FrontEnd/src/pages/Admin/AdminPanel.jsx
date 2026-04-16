@@ -27,7 +27,8 @@ import {
     Trash2,
     BarChart2, // Added back as it's used in the sidebar
     Plus,      // Added for the post job button
-    Eye        // Added for view details
+    Eye,       // Added for view details
+    ExternalLink // Added for Applications tab link
 } from 'lucide-react';
 import authService from '../../features/auth/authService';
 import jobService from '../../features/jobs/jobService';
@@ -97,15 +98,15 @@ const AdminPanel = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#050505] text-gray-100 flex overflow-hidden">
+        <div className="min-h-screen bg-gray-50 dark:bg-[#050505] text-gray-900 dark:text-gray-100 flex overflow-hidden">
             {/* Glassy Sidebar */}
-            <aside className="w-80 bg-black/40 backdrop-blur-3xl border-r border-white/5 hidden xl:flex flex-col z-50">
+            <aside className="w-80 bg-white/80 dark:bg-black/40 backdrop-blur-3xl border-r border-gray-200 dark:border-white/5 hidden xl:flex flex-col z-50">
                 <div className="p-10">
                     <div className="flex items-center gap-3">
                         <div className="flex-shrink-0">
                             <LogoIcon className="h-10 w-10" />
                         </div>
-                        <span className="text-2xl font-black text-white tracking-tighter">
+                        <span className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter">
                             Job<span className="text-primary italic">Sphere</span>
                         </span>
                     </div>
@@ -140,7 +141,7 @@ const AdminPanel = () => {
                 <div className="p-8 border-t border-white/5">
                     <div className="glass-card p-6 rounded-[24px] bg-gradient-to-br from-primary/10 to-transparent">
                         <p className="text-[10px] font-black text-primary uppercase tracking-widest mb-1">Server Region</p>
-                        <p className="text-xs font-bold text-white">AWS US-East-1 (North Virginia)</p>
+                        <p className="text-xs font-bold text-gray-900 dark:text-white">AWS US-East-1 (North Virginia)</p>
                     </div>
                 </div>
             </aside>
@@ -150,9 +151,9 @@ const AdminPanel = () => {
                 {/* Background Decor */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 blur-[150px] -z-10 opacity-50" />
 
-                <header className="sticky top-0 z-40 bg-black/60 backdrop-blur-xl border-b border-white/5 px-10 py-8 flex justify-between items-center">
+                <header className="sticky top-0 z-40 bg-white/80 dark:bg-black/60 backdrop-blur-xl border-b border-gray-200 dark:border-white/5 px-10 py-8 flex justify-between items-center">
                     <div>
-                        <h1 className="text-3xl font-black text-white tracking-tight">
+                        <h1 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">
                             {activeTab === 'overview' && 'Operational Intelligence'}
                             {activeTab === 'users' && 'Candidate Records'}
                             {activeTab === 'jobs' && 'Market Positions'}
@@ -174,7 +175,7 @@ const AdminPanel = () => {
                             <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">System Nominal</span>
                         </div>
                         <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-accent p-0.5">
-                            <div className="h-full w-full rounded-full bg-[#050505] flex items-center justify-center font-black text-xs">AD</div>
+                            <div className="h-full w-full rounded-full bg-white dark:bg-[#050505] flex items-center justify-center font-black text-gray-900 dark:text-white text-xs">AD</div>
                         </div>
                     </div>
                 </header>
@@ -223,16 +224,16 @@ const AdminPanel = () => {
                                                     <span className="text-[10px] font-black text-green-500 bg-green-500/10 px-2 py-1 rounded-lg uppercase tracking-widest">{item.trend}</span>
                                                 </div>
                                                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">{item.label}</p>
-                                                <h4 className="text-3xl font-black text-white tracking-tight">{item.value}</h4>
+                                                <h4 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">{item.value}</h4>
                                             </motion.div>
                                         ))}
                                     </div>
 
                                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                                        <div className="lg:col-span-2 glass-card p-10 rounded-[40px] border-none shadow-premium bg-black/20">
+                                        <div className="lg:col-span-2 glass-card p-10 rounded-[40px] border-none shadow-premium bg-white/50 dark:bg-black/20">
                                             <div className="flex items-center justify-between mb-10">
                                                 <div>
-                                                    <h3 className="text-xl font-black text-white tracking-tight">System Traffic</h3>
+                                                    <h3 className="text-xl font-black text-gray-900 dark:text-white tracking-tight">System Traffic</h3>
                                                     <p className="text-sm text-gray-500 font-medium">Real-time performance metrics</p>
                                                 </div>
                                                 <div className="flex gap-2">
@@ -249,7 +250,7 @@ const AdminPanel = () => {
                                                         transition={{ delay: i * 0.05, duration: 1, ease: "easeOut" }}
                                                         className="flex-1 bg-gradient-to-t from-primary/10 via-primary/40 to-primary rounded-t-lg group relative"
                                                     >
-                                                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white dark:bg-gray-900 text-black text-[10px] font-black px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">{h}%</div>
+                                                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-[10px] font-black px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">{h}%</div>
                                                     </motion.div>
                                                 ))}
                                             </div>
@@ -260,8 +261,8 @@ const AdminPanel = () => {
                                             </div>
                                         </div>
 
-                                        <div className="glass-card p-10 rounded-[40px] border-none shadow-premium bg-gradient-to-br from-primary/10 to-transparent">
-                                            <h3 className="text-xl font-black text-white tracking-tight mb-8">Recent Alerts</h3>
+                                        <div className="glass-card p-10 rounded-[40px] border-none shadow-premium bg-gradient-to-br from-primary/5 dark:from-primary/10 to-transparent">
+                                            <h3 className="text-xl font-black text-gray-900 dark:text-white tracking-tight mb-8">Recent Alerts</h3>
                                             <div className="space-y-6">
                                                 {[
                                                     { text: 'Server load spike detected in AP-South', type: 'warning' },
@@ -292,12 +293,12 @@ const AdminPanel = () => {
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    className="glass-card rounded-[40px] border border-white/5 overflow-hidden shadow-premium"
+                                    className="glass-card rounded-[40px] border border-gray-200 dark:border-white/5 overflow-hidden shadow-premium"
                                 >
                                     <div className="overflow-x-auto">
                                         <table className="w-full text-left">
                                             <thead>
-                                                <tr className="border-b border-white/5 bg-white dark:bg-gray-900/5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
+                                                <tr className="border-b border-gray-200 dark:border-white/5 bg-white dark:bg-gray-900/5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
                                                     <th className="py-8 px-10">Candidate Identity</th>
                                                     <th className="py-8 px-10">Classification</th>
                                                     <th className="py-8 px-10">Lifecycle Date</th>
@@ -305,7 +306,7 @@ const AdminPanel = () => {
                                                     <th className="py-8 px-10 text-right">Operations</th>
                                                 </tr>
                                             </thead>
-                                            <tbody className="divide-y divide-white/5">
+                                            <tbody className="divide-y divide-gray-200 dark:divide-white/5">
                                                 {users.map((item) => (
                                                     <tr key={item._id} className="hover:bg-white dark:bg-gray-900/[0.02] transition-colors group">
                                                         <td className="py-8 px-10">
@@ -314,7 +315,7 @@ const AdminPanel = () => {
                                                                     {item.name.charAt(0)}
                                                                 </div>
                                                                 <div>
-                                                                    <div className="text-lg font-black text-white group-hover:text-primary transition-colors">{item.name}</div>
+                                                                    <div className="text-lg font-black text-gray-900 dark:text-white group-hover:text-primary transition-colors">{item.name}</div>
                                                                     <div className="text-xs font-bold text-gray-500">{item.email}</div>
                                                                 </div>
                                                             </div>
@@ -389,7 +390,7 @@ const AdminPanel = () => {
                                                             {selectedUser.name.charAt(0)}
                                                         </div>
                                                         <div>
-                                                            <h2 className="text-2xl font-black text-white">{selectedUser.name}</h2>
+                                                            <h2 className="text-2xl font-black text-gray-900 dark:text-white">{selectedUser.name}</h2>
                                                             <div className="flex items-center gap-3 mt-2">
                                                                 <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${selectedUser.role === 'admin' ? 'bg-red-500/10 text-red-500 border-red-500/20' : selectedUser.role === 'employer' ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' : 'bg-green-500/10 text-green-500 border-green-500/20'}`}>
                                                                     {selectedUser.role}
@@ -548,12 +549,12 @@ const AdminPanel = () => {
                                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                                 >
                                     {allJobs.map((job) => (
-                                        <div key={job._id} className="glass-card p-8 rounded-[40px] border border-white/5 hover:border-primary/20 transition-all group shadow-premium relative overflow-hidden">
+                                        <div key={job._id} className="glass-card p-8 rounded-[40px] border border-gray-200 dark:border-white/5 hover:border-primary/20 transition-all group shadow-premium relative overflow-hidden">
                                             <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:scale-110 transition-transform">
-                                                <Briefcase className="h-20 w-20 text-white" />
+                                                <Briefcase className="h-20 w-20 text-gray-900 dark:text-white" />
                                             </div>
                                             <div className="relative z-10">
-                                                <h4 className="text-xl font-black text-white mb-2 leading-tight">{job.title}</h4>
+                                                <h4 className="text-xl font-black text-gray-900 dark:text-white mb-2 leading-tight">{job.title}</h4>
                                                 <p className="text-xs font-black text-primary uppercase tracking-widest mb-6">{job.company}</p>
                                                 <div className="flex items-center justify-between mt-auto">
                                                     <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{job.location}</span>
@@ -591,11 +592,11 @@ const AdminPanel = () => {
                                         ))}
                                     </div>
 
-                                    <div className="glass-card rounded-[40px] border border-white/5 overflow-hidden shadow-premium">
+                                    <div className="glass-card rounded-[40px] border border-gray-200 dark:border-white/5 overflow-hidden shadow-premium">
                                         <div className="overflow-x-auto">
                                             <table className="w-full text-left">
                                                 <thead>
-                                                    <tr className="border-b border-white/5 bg-white dark:bg-gray-900/5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
+                                                    <tr className="border-b border-gray-200 dark:border-white/5 bg-white dark:bg-gray-900/5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
                                                         <th className="py-8 px-10">Candidate</th>
                                                         <th className="py-8 px-10">Target Role</th>
                                                         <th className="py-8 px-10">Submission Date</th>
@@ -603,18 +604,18 @@ const AdminPanel = () => {
                                                         <th className="py-8 px-10 text-right">Operations</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody className="divide-y divide-white/5">
+                                                <tbody className="divide-y divide-gray-200 dark:divide-white/5">
                                                     {(applications || []).map((app) => (
                                                         <tr key={app?._id} className="hover:bg-white dark:bg-gray-900/[0.02] transition-colors group">
                                                             <td className="py-8 px-10">
                                                                 <div>
-                                                                    <div className="text-lg font-black text-white group-hover:text-primary transition-colors">{app?.applicant?.name || 'Unknown Candidate'}</div>
+                                                                    <div className="text-lg font-black text-gray-900 dark:text-white group-hover:text-primary transition-colors">{app?.applicant?.name || 'Unknown Candidate'}</div>
                                                                     <div className="text-xs font-bold text-gray-500">{app?.applicant?.email || 'No Email'}</div>
                                                                 </div>
                                                             </td>
                                                             <td className="py-8 px-10">
                                                                 <div>
-                                                                    <div className="text-sm font-black text-gray-200">{app?.job?.title || 'Position Decommissioned'}</div>
+                                                                    <div className="text-sm font-black text-gray-800 dark:text-gray-200">{app?.job?.title || 'Position Decommissioned'}</div>
                                                                     <div className="text-[10px] font-bold text-primary uppercase tracking-widest">{app?.job?.company || 'N/A'}</div>
                                                                 </div>
                                                             </td>
@@ -673,7 +674,7 @@ const AdminPanel = () => {
                                     className="max-w-2xl space-y-12"
                                 >
                                     <section>
-                                        <h3 className="text-xl font-black text-white mb-8 border-l-4 border-primary pl-6">Core Configuration</h3>
+                                        <h3 className="text-xl font-black text-gray-900 dark:text-white mb-8 border-l-4 border-primary pl-6">Core Configuration</h3>
                                         <div className="space-y-6">
                                             {[
                                                 { label: 'System Access Key', value: 'TB-ADMIN-0019283-X', type: 'text' },
@@ -685,7 +686,7 @@ const AdminPanel = () => {
                                                     <input
                                                         type={field.type}
                                                         defaultValue={field.value}
-                                                        className="w-full bg-white dark:bg-gray-900/5 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-primary/50 transition-all font-bold"
+                                                        className="w-full bg-white dark:bg-gray-900/5 border border-gray-200 dark:border-white/5 rounded-2xl py-4 px-6 text-gray-900 dark:text-white focus:outline-none focus:border-primary/50 transition-all font-bold"
                                                     />
                                                 </div>
                                             ))}
